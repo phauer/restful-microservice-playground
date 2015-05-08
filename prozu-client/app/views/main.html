@@ -1,0 +1,63 @@
+<div class="page-header">
+  <h1>Mitarbeiterübersicht </h1>
+</div>
+
+<div class="">
+  <div class="col-md-4">
+    <p>Mitarbeiter:</p>
+    <input type="text" ng-model="searchText" class="form-control" placeholder="Suche">
+    <p>Total: {{totalItems}}</p>
+    <table class="table table-hover" id="pz-employees">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class=""
+          ng-repeat="employee in employees | orderBy:'id'"
+          active-directive
+          ng-click="selectCurrent(employee)">
+        <td>{{employee.id}}</td>
+        <td>{{employee.name}}</td>
+      </tr>
+      </tbody>
+      <!-- active: class="list-group-item active"> -->
+    </table>
+    <pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm"
+                max-size="maxVisiblePages" items-per-page="itemsPerPage"
+                previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></pagination>
+  </div>
+
+  <div class="col-md-8"
+       ng-if="selectedEmployeeProjectDays != null && selectedEmployeeProjectDays.length == 0">
+    <p>Projektzulagen von {{selectedEmployee.name}}:</p>
+
+    <p>Keine Projekzulagen vorhanden.</p>
+  </div>
+  <div class="col-md-8"
+       ng-if="selectedEmployeeProjectDays != null && selectedEmployeeProjectDays.length > 0">
+    <p>Projektzulagen von {{selectedEmployee.name}}:</p>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>Monat</th>
+        <th>Anzahl Tage</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr
+        ng-repeat="projectDay in selectedEmployeeProjectDays | orderBy:'month'">
+        <td>{{projectDay.month}}</td>
+        <td>{{projectDay.daysCount}}</td>
+      <tr>
+      <tr>
+        <td><strong>Gesamt:</strong></td>
+        <td><strong>{{sumProjectDays(selectedEmployeeProjectDays)}}</strong></td>
+      <tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
