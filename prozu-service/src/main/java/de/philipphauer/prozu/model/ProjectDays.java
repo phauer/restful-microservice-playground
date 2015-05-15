@@ -6,9 +6,16 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import org.mongojack.ObjectId;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 
 public class ProjectDays {
+
+	@ObjectId
+	@JsonProperty("_id")
+	private String mongoId;
 
 	private long id;
 
@@ -20,15 +27,18 @@ public class ProjectDays {
 	@NotNull
 	private int daysCount;
 
-	private Employee employee;
+	// used for RDB/JPA, not necessary with MongoDB
+	// private Employee employee;
 
 	public ProjectDays() {
 	}
 
-	public ProjectDays(YearMonth month, int daysCount, Employee employee) {
+	public ProjectDays(YearMonth month, int daysCount
+	// , Employee employee
+	) {
 		this.month = month;
 		this.daysCount = daysCount;
-		this.employee = employee;
+		// this.employee = employee;
 	}
 
 	public YearMonth getMonth() {
@@ -55,13 +65,13 @@ public class ProjectDays {
 		this.id = id;
 	}
 
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
-	public Employee getEmployee() {
-		return employee;
-	}
+	// public void setEmployee(Employee employee) {
+	// this.employee = employee;
+	// }
+	//
+	// public Employee getEmployee() {
+	// return employee;
+	// }
 
 	@Override
 	public String toString() {

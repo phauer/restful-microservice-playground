@@ -4,15 +4,17 @@ import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 
 import de.philipphauer.prozu.healthchecks.TemplateHealthCheck;
 import de.philipphauer.prozu.rest.EmployeeResource;
-import de.philipphauer.prozu.util.ser.Java8TimeModule;
+import de.philipphauer.prozu.util.ser.DummyDataInitializer;
 
 public class ProZuApplication extends Application<ProZuConfiguration> {
 
 	private GuiceBundle<ProZuConfiguration> guiceBundle;
+	private ProZuModule module;
 
 	public static void main(String[] args) throws Exception {
 		new ProZuApplication().run(args);
@@ -25,9 +27,11 @@ public class ProZuApplication extends Application<ProZuConfiguration> {
 
 	@Override
 	public void initialize(Bootstrap<ProZuConfiguration> bootstrap) {
+		ObjectMapper objectMapper = bootstrap.getObjectMapper();
+		module = new ProZuModule(objectMapper);
 
 		guiceBundle = GuiceBundle.<ProZuConfiguration> newBuilder()
-				.addModule(new ProZuModule())
+				.addModule(module)
 				.setConfigClass(ProZuConfiguration.class)
 				// .enableAutoConfig("de.itemis.prozu.repo.inmemory")
 				.enableAutoConfig(getClass().getPackage().getName())
@@ -40,12 +44,11 @@ public class ProZuApplication extends Application<ProZuConfiguration> {
 	public void run(ProZuConfiguration configuration, Environment environment) {
 		TemplateHealthCheck healthCheck = new TemplateHealthCheck(configuration.getTemplate());
 		environment.healthChecks().register("template", healthCheck);
-
-		// EmployeeResource resource = new
-		// EmployeeResource(configuration.getTemplate(),
-		// configuration.getDefaultName());
 		environment.jersey().register(EmployeeResource.class);
 
-		environment.getObjectMapper().registerModule(new Java8TimeModule());
+		//TODO close connection to mongodb
+		DummyDataInitializer dummyInitializer = guiceBundle.getInjector().getInstance(DummyDataInitializer.class);
+		dummyInitializer.initDummyData();
 	}
+
 }

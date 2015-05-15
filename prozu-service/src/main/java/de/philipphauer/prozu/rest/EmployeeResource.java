@@ -57,7 +57,8 @@ public class EmployeeResource {
 		int usedLimit = limit == null ? 10 : limit;
 		int usedOffset = offset == null ? 0 : offset;
 		Optional<String> usedSearch = Optional.ofNullable(search);
-		List<Employee> employees = dao.getEmployees(usedLimit, usedOffset, usedSearch);
+		//		List<Employee> employees = dao.getEmployees(usedLimit, usedOffset, usedSearch);
+		List<Employee> employees = dao.getAllEmployees();
 		long totalCount = dao.getEmployeeCount(usedSearch);
 		EmployeesResponse response = mapper.mapToEmployeesResponse(employees, usedLimit, usedOffset, totalCount,
 				usedSearch);

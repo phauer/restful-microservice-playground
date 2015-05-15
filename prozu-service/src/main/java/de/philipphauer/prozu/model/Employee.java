@@ -6,11 +6,17 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.mongojack.ObjectId;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
 public class Employee {
+
+	@ObjectId
+	@JsonProperty("_id")
+	private String mondoDBId;
 
 	private long id;
 

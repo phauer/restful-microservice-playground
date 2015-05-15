@@ -1,4 +1,4 @@
-package de.philipphauer.prozu.repo.inmemory;
+package de.philipphauer.prozu.repo.shared;
 
 import java.util.concurrent.atomic.AtomicLong;
 

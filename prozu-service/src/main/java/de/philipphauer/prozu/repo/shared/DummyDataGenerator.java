@@ -1,4 +1,4 @@
-package de.philipphauer.prozu.repo.inmemory;
+package de.philipphauer.prozu.repo.shared;
 
 import java.time.YearMonth;
 import java.util.List;
@@ -39,9 +39,10 @@ public class DummyDataGenerator {
 			int days = randomInt(1, 30);
 			int month = randomInt(1, 12);
 			YearMonth months = YearMonth.of(2015, month);
-			ProjectDays projectDay = new ProjectDays(months, days, employee);
-			return projectDay;
-		}).collect(Collectors.toList());
+			ProjectDays projectDay = new ProjectDays(months, days);
+			//			ProjectDays projectDay = new ProjectDays(months, days, employee);
+				return projectDay;
+			}).collect(Collectors.toList());
 		return projectDays;
 	}
 

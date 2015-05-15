@@ -12,20 +12,22 @@ public interface EmployeeDAO {
 
 	Optional<Employee> getEmployee(long employeeId);
 
+	List<Employee> getEmployees(int limit, int offset, Optional<String> search);
+
 	List<ProjectDays> getAllProjectDays(long employeeId);
 
 	Employee createEmployee(String name);
 
 	void updateEmployee(long id, String name);
 
-	void save(Object employee);
+	void save(Employee employee);
 
-	void saveAll(List<? extends Object> employees);
+	void saveAll(List<Employee> employees);
 
 	void deleteEmployee(long employeeId);
 
-	List<Employee> getEmployees(int limit, int offset, Optional<String> search);
-
 	long getEmployeeCount(Optional<String> usedSearch);
+
+	void deleteAllEmployees();
 
 }

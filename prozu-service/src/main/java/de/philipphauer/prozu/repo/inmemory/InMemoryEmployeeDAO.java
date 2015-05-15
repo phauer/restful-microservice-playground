@@ -15,6 +15,7 @@ import de.philipphauer.prozu.model.Employee;
 import de.philipphauer.prozu.model.ProjectDays;
 import de.philipphauer.prozu.repo.EmployeeDAO;
 import de.philipphauer.prozu.repo.exception.RepositoryException;
+import de.philipphauer.prozu.repo.shared.AtomicIDGenerator;
 
 @Singleton
 public class InMemoryEmployeeDAO implements EmployeeDAO {
@@ -22,12 +23,6 @@ public class InMemoryEmployeeDAO implements EmployeeDAO {
 	private Map<Long, Employee> employees;
 	@Inject
 	private AtomicIDGenerator idGenerator;
-
-	@Inject
-	public InMemoryEmployeeDAO(DummyDataGenerator generator) {
-		List<Employee> dummies = generator.createEmployees(500);
-		employees = dummies.stream().collect(Collectors.toMap(Employee::getId, Function.identity()));
-	}
 
 	@Override
 	public List<Employee> getAllEmployees() {
@@ -82,26 +77,27 @@ public class InMemoryEmployeeDAO implements EmployeeDAO {
 
 	@Override
 	public void updateEmployee(long id, String name) {
-		// TODO Auto-generated method stub
-
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void save(Object employee) {
-		// TODO Auto-generated method stub
-
+	public void save(Employee employee) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void saveAll(List<? extends Object> employees) {
-		// TODO Auto-generated method stub
-
+	public void saveAll(List<Employee> employeeList) {
+		employees = employeeList.stream().collect(Collectors.toMap(Employee::getId, Function.identity()));
 	}
 
 	@Override
 	public void deleteEmployee(long employeeId) {
-		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException();
+	}
 
+	@Override
+	public void deleteAllEmployees() {
+		employees.clear();
 	}
 
 }
