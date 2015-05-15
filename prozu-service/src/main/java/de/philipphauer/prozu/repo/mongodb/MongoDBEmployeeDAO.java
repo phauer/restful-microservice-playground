@@ -3,10 +3,12 @@ package de.philipphauer.prozu.repo.mongodb;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 
 import org.mongojack.DBCursor;
+import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,7 +44,18 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 
 	@Override
 	public List<Employee> getEmployees(int limit, int offset, Optional<String> search) {
-		throw new UnsupportedOperationException();
+		DBCursor<Employee> cursor = getSearchCursor(search).skip(offset).limit(limit);
+		List<Employee> list = Lists.newArrayList((Iterator<Employee>) cursor);
+		return list;
+	}
+
+	private DBCursor<Employee> getSearchCursor(Optional<String> search) {
+		if (search.isPresent()) {
+			Pattern pattern = Pattern.compile(".*" + search.get().toLowerCase() + ".*");
+			return col.find(DBQuery.regex(Employee.NAME, pattern));
+		} else {
+			return col.find();
+		}
 	}
 
 	@Override
@@ -77,7 +90,7 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 
 	@Override
 	public long getEmployeeCount(Optional<String> usedSearch) {
-		return col.count();//TODO use usedSearch
+		return getSearchCursor(usedSearch).count();
 	}
 
 	@Override

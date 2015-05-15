@@ -14,6 +14,8 @@ import com.google.common.collect.Lists;
 
 public class Employee {
 
+	public static final String NAME = "name";
+
 	@ObjectId
 	@JsonProperty("_id")
 	private String mondoDBId;

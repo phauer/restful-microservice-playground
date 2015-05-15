@@ -6,16 +6,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import org.mongojack.ObjectId;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 
 public class ProjectDays {
-
-	@ObjectId
-	@JsonProperty("_id")
-	private String mongoId;
 
 	private long id;
 

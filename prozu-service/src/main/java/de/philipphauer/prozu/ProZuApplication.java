@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 
 import de.philipphauer.prozu.healthchecks.TemplateHealthCheck;
+import de.philipphauer.prozu.repo.mongodb.MongoDBConfig;
 import de.philipphauer.prozu.rest.EmployeeResource;
 import de.philipphauer.prozu.util.ser.DummyDataInitializer;
 
@@ -28,7 +29,8 @@ public class ProZuApplication extends Application<ProZuConfiguration> {
 	@Override
 	public void initialize(Bootstrap<ProZuConfiguration> bootstrap) {
 		ObjectMapper objectMapper = bootstrap.getObjectMapper();
-		module = new ProZuModule(objectMapper);
+		MongoDBConfig config = new MongoDBConfig("test", "employees");
+		module = new ProZuModule(objectMapper, config);
 
 		guiceBundle = GuiceBundle.<ProZuConfiguration> newBuilder()
 				.addModule(module)
