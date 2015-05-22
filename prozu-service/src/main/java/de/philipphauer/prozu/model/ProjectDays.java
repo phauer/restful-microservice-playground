@@ -10,8 +10,6 @@ import com.google.common.base.MoreObjects;
 
 public class ProjectDays {
 
-	private long id;
-
 	@NotNull
 	private YearMonth month;
 
@@ -50,14 +48,6 @@ public class ProjectDays {
 		this.daysCount = daysCount;
 	}
 
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	// public void setEmployee(Employee employee) {
 	// this.employee = employee;
 	// }
@@ -68,7 +58,7 @@ public class ProjectDays {
 
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(ProjectDays.class).add("id", id)
+		return MoreObjects.toStringHelper(ProjectDays.class)
 				// .add("employee", employee.getId())
 				.add("month", month).add("daysCount", daysCount).toString();
 	}

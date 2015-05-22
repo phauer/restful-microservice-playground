@@ -7,8 +7,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class ProjectDaysResponse {
 
-	private long id;
-
 	private YearMonth month;
 
 	private int daysCount;
@@ -16,14 +14,9 @@ public class ProjectDaysResponse {
 	public ProjectDaysResponse() {
 	}
 
-	public ProjectDaysResponse(long id, YearMonth month, int daysCount) {
-		this.id = id;
+	public ProjectDaysResponse(YearMonth month, int daysCount) {
 		this.month = month;
 		this.daysCount = daysCount;
-	}
-
-	public long getId() {
-		return id;
 	}
 
 	public YearMonth getMonth() {

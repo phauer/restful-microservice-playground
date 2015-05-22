@@ -19,6 +19,7 @@ import com.mongodb.DBCollection;
 import de.philipphauer.prozu.model.Employee;
 import de.philipphauer.prozu.model.ProjectDays;
 import de.philipphauer.prozu.repo.EmployeeDAO;
+import de.philipphauer.prozu.repo.exception.RepositoryException;
 
 @Singleton
 public class MongoDBEmployeeDAO implements EmployeeDAO {
@@ -39,7 +40,8 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 
 	@Override
 	public Optional<Employee> getEmployee(long employeeId) {
-		throw new UnsupportedOperationException();
+		Employee employee = col.findOne(DBQuery.is(Employee.ID, employeeId));
+		return Optional.ofNullable(employee);
 	}
 
 	@Override
@@ -60,7 +62,12 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 
 	@Override
 	public List<ProjectDays> getAllProjectDays(long employeeId) {
-		throw new UnsupportedOperationException();
+		Optional<Employee> employee = getEmployee(employeeId);
+		if (employee.isPresent()) {
+			return employee.get().getProjectDays();
+		} else {
+			throw new RepositoryException("Employee " + employeeId + " doesn't exist.");
+		}
 	}
 
 	@Override

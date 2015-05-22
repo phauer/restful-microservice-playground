@@ -34,6 +34,6 @@ public class EntityMapper {
 	}
 
 	public ProjectDaysResponse mapToRProjectDay(ProjectDays input) {
-		return new ProjectDaysResponse(input.getId(), input.getMonth(), input.getDaysCount());
+		return new ProjectDaysResponse(input.getMonth(), input.getDaysCount());
 	}
 }

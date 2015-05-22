@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 public class Employee {
 
 	public static final String NAME = "name";
+	public static final String ID = "id";
 
 	@ObjectId
 	@JsonProperty("_id")
