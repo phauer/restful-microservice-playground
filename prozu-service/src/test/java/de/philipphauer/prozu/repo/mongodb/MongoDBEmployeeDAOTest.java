@@ -22,8 +22,6 @@ import de.philipphauer.prozu.model.ProjectDays;
 @RunWith(GuiceRunner.class)
 public class MongoDBEmployeeDAOTest {
 
-	//TODO fix bug when using queryString (broken regex)
-
 	@Inject
 	private MongoDBEmployeeDAO dao;
 
@@ -62,15 +60,6 @@ public class MongoDBEmployeeDAOTest {
 
 		long count = dao.getEmployeeCount(Optional.of("P"));
 		assertEquals(2, count);
-
-		//reason: case sensitive!
-		//doesn't work:
-		// db.employeesTest.find({"name" : {$regex : ".*p.*"}})
-		//works:
-		// db.employeesTest.find({"name" : {$regex : ".*P.*"}})
-		// db.employeesTest.find({"name" : /p/i})
-		// db.employeesTest.find({"name" : {$regex : ".*p.*", $options: "i"}})
-		//TODO how to express this via MongoJack?
 	}
 
 }

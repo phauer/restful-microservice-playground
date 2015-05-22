@@ -51,7 +51,7 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 
 	private DBCursor<Employee> getSearchCursor(Optional<String> search) {
 		if (search.isPresent()) {
-			Pattern pattern = Pattern.compile(".*" + search.get().toLowerCase() + ".*");
+			Pattern pattern = Pattern.compile(".*" + search.get().toLowerCase() + ".*", Pattern.CASE_INSENSITIVE);
 			return col.find(DBQuery.regex(Employee.NAME, pattern));
 		} else {
 			return col.find();
