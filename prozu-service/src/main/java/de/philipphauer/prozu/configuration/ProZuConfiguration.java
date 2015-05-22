@@ -1,6 +1,9 @@
-package de.philipphauer.prozu;
+package de.philipphauer.prozu.configuration;
 
 import io.dropwizard.Configuration;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -13,7 +16,11 @@ public class ProZuConfiguration extends Configuration {
 	private String template;
 
 	@NotEmpty
-	private String defaultName = "Stranger";
+	private String defaultName;
+
+	@NotNull
+	@Valid
+	private MongoDBConfig mongoDB;
 
 	@JsonProperty
 	public String getTemplate() {
@@ -33,5 +40,15 @@ public class ProZuConfiguration extends Configuration {
 	@JsonProperty
 	public void setDefaultName(String name) {
 		this.defaultName = name;
+	}
+
+	@JsonProperty
+	public MongoDBConfig getMongoDB() {
+		return mongoDB;
+	}
+
+	@JsonProperty
+	public void setMongoDB(MongoDBConfig mongoDB) {
+		this.mongoDB = mongoDB;
 	}
 }

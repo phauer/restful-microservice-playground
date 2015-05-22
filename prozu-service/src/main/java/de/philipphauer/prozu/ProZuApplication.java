@@ -7,10 +7,9 @@ import io.dropwizard.setup.Environment;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 
+import de.philipphauer.prozu.configuration.ProZuConfiguration;
 import de.philipphauer.prozu.healthchecks.TemplateHealthCheck;
-import de.philipphauer.prozu.repo.mongodb.MongoDBConfig;
 import de.philipphauer.prozu.rest.EmployeeResource;
-import de.philipphauer.prozu.util.ser.DummyDataInitializer;
 
 public class ProZuApplication extends Application<ProZuConfiguration> {
 
@@ -29,8 +28,7 @@ public class ProZuApplication extends Application<ProZuConfiguration> {
 	@Override
 	public void initialize(Bootstrap<ProZuConfiguration> bootstrap) {
 		ObjectMapper objectMapper = bootstrap.getObjectMapper();
-		MongoDBConfig config = new MongoDBConfig("test", "employees");
-		module = new ProZuModule(objectMapper, config);
+		module = new ProZuModule(objectMapper);
 
 		guiceBundle = GuiceBundle.<ProZuConfiguration> newBuilder()
 				.addModule(module)
@@ -49,8 +47,8 @@ public class ProZuApplication extends Application<ProZuConfiguration> {
 		environment.jersey().register(EmployeeResource.class);
 
 		//TODO close connection to mongodb
-		DummyDataInitializer dummyInitializer = guiceBundle.getInjector().getInstance(DummyDataInitializer.class);
-		dummyInitializer.initDummyData();
+		//		DummyDataInitializer dummyInitializer = guiceBundle.getInjector().getInstance(DummyDataInitializer.class);
+		//		dummyInitializer.initDummyData();
 	}
 
 }

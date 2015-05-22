@@ -1,2 +1,5 @@
 template: Hello, %s!
-defaultName: Stranger
+defaultName: Unbekannter
+mongoDB:
+ databaseName: test
+ employeeCollectionName: employeesTest

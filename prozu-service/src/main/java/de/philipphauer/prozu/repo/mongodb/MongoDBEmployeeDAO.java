@@ -13,7 +13,6 @@ import org.mongojack.JacksonDBCollection;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
-import com.google.inject.Singleton;
 import com.mongodb.DBCollection;
 
 import de.philipphauer.prozu.model.Employee;
@@ -21,7 +20,7 @@ import de.philipphauer.prozu.model.ProjectDays;
 import de.philipphauer.prozu.repo.EmployeeDAO;
 import de.philipphauer.prozu.repo.exception.RepositoryException;
 
-@Singleton
+//@Singleton//TODO doesn't work with guice-bundle. see https://github.com/HubSpot/dropwizard-guice/issues/40
 public class MongoDBEmployeeDAO implements EmployeeDAO {
 
 	private JacksonDBCollection<Employee, String> col;
