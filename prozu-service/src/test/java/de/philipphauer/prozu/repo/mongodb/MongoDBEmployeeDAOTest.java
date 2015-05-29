@@ -1,6 +1,6 @@
 package de.philipphauer.prozu.repo.mongodb;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -15,11 +15,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.philipphauer.prozu.di.DropwizardGuiceRunner;
+import de.philipphauer.prozu.di.pure.GuiceRunner;
 import de.philipphauer.prozu.model.Employee;
 import de.philipphauer.prozu.model.ProjectDays;
 
-@RunWith(DropwizardGuiceRunner.class)
+@RunWith(GuiceRunner.class)
 public class MongoDBEmployeeDAOTest {
 
 	@Inject

@@ -1,4 +1,4 @@
-package de.philipphauer.prozu.di;
+package de.philipphauer.prozu.di.service;
 
 import io.dropwizard.testing.junit.DropwizardAppRule;
 
@@ -16,9 +16,9 @@ import com.google.inject.Injector;
 
 import de.philipphauer.prozu.configuration.ProZuConfiguration;
 
-public class DropwizardGuiceRunner extends BlockJUnit4ClassRunner {
+public class ServiceTestRunner extends BlockJUnit4ClassRunner {
 
-	public DropwizardGuiceRunner(final Class<?> classToRun) throws InitializationError {
+	public ServiceTestRunner(final Class<?> classToRun) throws InitializationError {
 		super(classToRun);
 	}
 
@@ -27,7 +27,7 @@ public class DropwizardGuiceRunner extends BlockJUnit4ClassRunner {
 		Object test = super.createTest();
 
 		ProZuConfiguration config = getConfiguration(test);
-		TestGuiceModule testGuiceModule = new TestGuiceModule(config);
+		ServiceTestModule testGuiceModule = new ServiceTestModule(config);
 		Injector testInjector = Guice.createInjector(testGuiceModule);
 		testInjector.injectMembers(test);
 		return test;

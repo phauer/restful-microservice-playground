@@ -22,9 +22,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import de.philipphauer.prozu.MongoDbTestUtil;
 import de.philipphauer.prozu.ProZuApplication;
 import de.philipphauer.prozu.configuration.ProZuConfiguration;
-import de.philipphauer.prozu.di.DropwizardGuiceRunner;
+import de.philipphauer.prozu.di.service.ServiceTestRunner;
 
-@RunWith(DropwizardGuiceRunner.class)
+@RunWith(ServiceTestRunner.class)
 public class EmployeeResourceTest {
 
 	@ClassRule

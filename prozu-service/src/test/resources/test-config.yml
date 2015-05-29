@@ -2,4 +2,4 @@ template: Hello, %s!
 defaultName: Unbekannter
 mongoDB:
  databaseName: test
- employeeCollectionName: employeesTest
+ employeeCollectionName: employeesServiceTest

@@ -1,4 +1,4 @@
-package de.philipphauer.prozu.di;
+package de.philipphauer.prozu.di.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
@@ -6,11 +6,11 @@ import com.google.inject.AbstractModule;
 import de.philipphauer.prozu.ProZuModule;
 import de.philipphauer.prozu.configuration.ProZuConfiguration;
 
-public class TestGuiceModule extends AbstractModule {
+public class ServiceTestModule extends AbstractModule {
 
 	private ProZuConfiguration config;
 
-	public TestGuiceModule(ProZuConfiguration config) {
+	public ServiceTestModule(ProZuConfiguration config) {
 		this.config = config;
 	}
 
