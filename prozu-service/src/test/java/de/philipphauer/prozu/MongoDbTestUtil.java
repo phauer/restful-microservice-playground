@@ -29,7 +29,6 @@ public class MongoDbTestUtil {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public void writeJsonStringToDb(String json) {
-		System.out.println(json);
 		BasicDBList dbObject = (BasicDBList) JSON.parse(json);
 		employeesCollection.insert((List) dbObject);
 	}

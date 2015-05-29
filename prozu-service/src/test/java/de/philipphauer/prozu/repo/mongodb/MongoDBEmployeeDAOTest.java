@@ -15,11 +15,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import de.philipphauer.prozu.di.GuiceRunner;
+import de.philipphauer.prozu.di.DropwizardGuiceRunner;
 import de.philipphauer.prozu.model.Employee;
 import de.philipphauer.prozu.model.ProjectDays;
 
-@RunWith(GuiceRunner.class)
+@RunWith(DropwizardGuiceRunner.class)
 public class MongoDBEmployeeDAOTest {
 
 	@Inject

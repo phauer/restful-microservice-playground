@@ -42,9 +42,6 @@ public class ProZuModule extends AbstractModule {
 	//@Singleton//TODO doesn't work with guice-bundle. see https://github.com/HubSpot/dropwizard-guice/issues/40
 	@Provides
 	public DBCollection get(ProZuConfiguration config) {
-		System.out.println("==>" + config);
-		System.out.println("==>" + config.getDefaultName());
-		System.out.println("==>" + config.getMongoDB());
 		try {
 			MongoClient mongoClient = new MongoClient();
 			DB personDb = mongoClient.getDB(config.getMongoDB().getDatabaseName());

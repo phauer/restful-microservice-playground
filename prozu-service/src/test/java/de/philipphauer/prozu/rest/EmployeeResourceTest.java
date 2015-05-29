@@ -22,17 +22,15 @@ import com.fasterxml.jackson.databind.JsonNode;
 import de.philipphauer.prozu.MongoDbTestUtil;
 import de.philipphauer.prozu.ProZuApplication;
 import de.philipphauer.prozu.configuration.ProZuConfiguration;
-import de.philipphauer.prozu.di.GuiceRunner;
+import de.philipphauer.prozu.di.DropwizardGuiceRunner;
 
-@RunWith(GuiceRunner.class)
+@RunWith(DropwizardGuiceRunner.class)
 public class EmployeeResourceTest {
 
 	@ClassRule
 	public static final DropwizardAppRule<ProZuConfiguration> RULE =
 			new DropwizardAppRule<ProZuConfiguration>(ProZuApplication.class,
 					ResourceHelpers.resourceFilePath("test-config.yml"));
-	//TODO hm test-config.yml is not known to the TestModule?! every field is null!
-	// use	BootstrapUtils.reset()?  see https://github.com/HubSpot/dropwizard-guice
 
 	@Inject
 	private MongoDbTestUtil testUtil;
@@ -52,6 +50,6 @@ public class EmployeeResourceTest {
 		JsonNode json = response.readEntity(JsonNode.class);
 
 		assertThat(response.getStatus(), equalTo(200));
-		assertThat(json.get("totalCount"), equalTo(10));
+		assertThat(json.get("totalCount").asInt(), equalTo(10));
 	}
 }
