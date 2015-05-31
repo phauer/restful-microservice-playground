@@ -1,6 +1,6 @@
 package de.philipphauer.prozu.repo.mongodb;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class MongoDBEmployeeDAOTest {
 	@Test
 	public void find() {
 		String name = "Albert Stark";
-		Employee employee = new Employee(name, 0);
+		Employee employee = new Employee(name);
 		YearMonth yearMonth = YearMonth.now();
 		employee.addProjectDays(new ProjectDays(yearMonth, 5));
 
@@ -53,9 +53,9 @@ public class MongoDBEmployeeDAOTest {
 	@Test
 	public void countWithSearch() {
 		ArrayList<Employee> employees = Lists.newArrayList(
-				new Employee("Albert Stark", 0),
-				new Employee("Peter Müller", 0),
-				new Employee("Paul Köhler", 0));
+				new Employee("Albert Stark"),
+				new Employee("Peter Müller"),
+				new Employee("Paul Köhler"));
 		dao.saveAll(employees);
 
 		long count = dao.getEmployeeCount(Optional.of("P"));

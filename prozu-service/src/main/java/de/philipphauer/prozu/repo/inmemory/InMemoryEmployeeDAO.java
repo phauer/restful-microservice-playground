@@ -15,12 +15,11 @@ import de.philipphauer.prozu.model.Employee;
 import de.philipphauer.prozu.model.ProjectDays;
 import de.philipphauer.prozu.repo.EmployeeDAO;
 import de.philipphauer.prozu.repo.exception.RepositoryException;
-import de.philipphauer.prozu.repo.shared.AtomicIDGenerator;
 
 @Singleton
 public class InMemoryEmployeeDAO implements EmployeeDAO {
 
-	private Map<Long, Employee> employees;
+	private Map<String, Employee> employees;
 	@Inject
 	private AtomicIDGenerator idGenerator;
 
@@ -53,13 +52,13 @@ public class InMemoryEmployeeDAO implements EmployeeDAO {
 	}
 
 	@Override
-	public Optional<Employee> getEmployee(long employeeId) {
+	public Optional<Employee> getEmployee(String employeeId) {
 		Employee employee = employees.get(employeeId);
 		return Optional.ofNullable(employee);
 	}
 
 	@Override
-	public List<ProjectDays> getAllProjectDays(long employeeId) {
+	public List<ProjectDays> getAllProjectDays(String employeeId) {
 		Optional<Employee> employee = getEmployee(employeeId);
 		if (employee.isPresent()) {
 			return employee.get().getProjectDays();
@@ -69,14 +68,14 @@ public class InMemoryEmployeeDAO implements EmployeeDAO {
 
 	@Override
 	public Employee createEmployee(String name) {
-		long id = idGenerator.generateID();
-		Employee employee = new Employee(name, id);
+		String id = idGenerator.generateID();
+		Employee employee = new Employee(name);
 		employees.put(id, employee);
 		return employee;
 	}
 
 	@Override
-	public void updateEmployee(long id, String name) {
+	public void updateEmployee(String id, String name) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -91,7 +90,7 @@ public class InMemoryEmployeeDAO implements EmployeeDAO {
 	}
 
 	@Override
-	public void deleteEmployee(long employeeId) {
+	public void deleteEmployee(String employeeId) {
 		throw new UnsupportedOperationException();
 	}
 

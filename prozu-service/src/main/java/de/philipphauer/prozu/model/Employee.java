@@ -19,9 +19,7 @@ public class Employee {
 
 	@ObjectId
 	@JsonProperty("_id")
-	private String mondoDBId;
-
-	private long id;
+	private String id;
 
 	@NotNull
 	@NotEmpty
@@ -36,12 +34,6 @@ public class Employee {
 
 	public Employee(String name) {
 		this.name = name;
-		projectDays = Lists.newArrayList();
-	}
-
-	public Employee(String name, long id) {
-		this.name = name;
-		this.id = id;
 		projectDays = Lists.newArrayList();
 	}
 
@@ -61,7 +53,7 @@ public class Employee {
 		this.name = name;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 

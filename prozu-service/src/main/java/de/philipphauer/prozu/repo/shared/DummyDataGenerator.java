@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import de.philipphauer.prozu.model.Employee;
@@ -16,9 +15,6 @@ import de.philipphauer.prozu.rest.util.NameGenerator;
 @Singleton
 public class DummyDataGenerator {
 
-	@Inject
-	private AtomicIDGenerator idGenerator;
-
 	public List<Employee> createEmployees(int amount) {
 		List<Employee> employees = IntStream.rangeClosed(1, amount)
 				.mapToObj((index) -> createEmployee())
@@ -27,7 +23,7 @@ public class DummyDataGenerator {
 	}
 
 	private Employee createEmployee() {
-		Employee employee = new Employee(NameGenerator.generateName(), idGenerator.generateID());
+		Employee employee = new Employee(NameGenerator.generateName());
 		List<ProjectDays> bonuses = createRandomProjectDays(employee);
 		employee.addProjectDays(bonuses);
 		return employee;
@@ -40,9 +36,8 @@ public class DummyDataGenerator {
 			int month = randomInt(1, 12);
 			YearMonth months = YearMonth.of(2015, month);
 			ProjectDays projectDay = new ProjectDays(months, days);
-			//			ProjectDays projectDay = new ProjectDays(months, days, employee);
-				return projectDay;
-			}).collect(Collectors.toList());
+			return projectDay;
+		}).collect(Collectors.toList());
 		return projectDays;
 	}
 

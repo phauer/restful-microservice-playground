@@ -38,8 +38,8 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 	}
 
 	@Override
-	public Optional<Employee> getEmployee(long employeeId) {
-		Employee employee = col.findOne(DBQuery.is(Employee.ID, employeeId));
+	public Optional<Employee> getEmployee(String employeeId) {
+		Employee employee = col.findOneById(employeeId);
 		return Optional.ofNullable(employee);
 	}
 
@@ -60,7 +60,7 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 	}
 
 	@Override
-	public List<ProjectDays> getAllProjectDays(long employeeId) {
+	public List<ProjectDays> getAllProjectDays(String employeeId) {
 		Optional<Employee> employee = getEmployee(employeeId);
 		if (employee.isPresent()) {
 			return employee.get().getProjectDays();
@@ -71,11 +71,13 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 
 	@Override
 	public Employee createEmployee(String name) {
-		throw new UnsupportedOperationException();
+		Employee employee = new Employee(name);
+		col.insert(employee);
+		return employee;
 	}
 
 	@Override
-	public void updateEmployee(long id, String name) {
+	public void updateEmployee(String id, String name) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -90,7 +92,7 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 	}
 
 	@Override
-	public void deleteEmployee(long employeeId) {
+	public void deleteEmployee(String employeeId) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -67,7 +67,7 @@ public class EmployeeResource {
 	@GET
 	@Path("/{employeeId}")
 	@Produces(MediaTypeWithCharset.APPLICATION_JSON_UTF8)
-	public EmployeeResponse getEmployee(@PathParam("employeeId") int employeeId) {
+	public EmployeeResponse getEmployee(@PathParam("employeeId") String employeeId) {
 		Optional<Employee> employee = dao.getEmployee(employeeId);
 		if (employee.isPresent()) {
 			EmployeeResponse rEmployee = mapper.mapToREmployee(employee.get());
@@ -80,7 +80,7 @@ public class EmployeeResource {
 	@Path("/{employeeId}/projectdays/")
 	@Produces(MediaTypeWithCharset.APPLICATION_JSON_UTF8)
 	public List<ProjectDaysResponse> getAllProjectDays(
-			@PathParam("employeeId") int employeeId) {
+			@PathParam("employeeId") String employeeId) {
 		List<ProjectDays> projectDays = dao.getAllProjectDays(employeeId);
 		List<ProjectDaysResponse> rProjectDays = mapper.mapToRProjectDays(projectDays);
 		return rProjectDays;
@@ -102,7 +102,7 @@ public class EmployeeResource {
 		return response;
 	}
 
-	private URI createNewLocationURI(long employeeId) throws URISyntaxException {
+	private URI createNewLocationURI(String employeeId) throws URISyntaxException {
 		String uriString = context.getAbsolutePath().toString();
 		if (!uriString.endsWith("/")) {
 			uriString += "/";
@@ -117,7 +117,7 @@ public class EmployeeResource {
 	@PUT
 	@Path("/{employeeId}")
 	@Consumes(MediaTypeWithCharset.APPLICATION_JSON_UTF8)
-	public Response updateEmployee(@PathParam("employeeId") long employeeId,
+	public Response updateEmployee(@PathParam("employeeId") String employeeId,
 			EmployeeResponse newEmployeeData) {
 		String name = newEmployeeData.getName();
 		dao.updateEmployee(employeeId, name);
@@ -131,7 +131,7 @@ public class EmployeeResource {
 	@DELETE
 	@Path("/{employeeId}")
 	@Consumes(MediaTypeWithCharset.APPLICATION_JSON_UTF8)
-	public Response deleteEmployee(@PathParam("employeeId") long employeeId) {
+	public Response deleteEmployee(@PathParam("employeeId") String employeeId) {
 		dao.deleteEmployee(employeeId);
 		return Response.ok().build();
 	}
