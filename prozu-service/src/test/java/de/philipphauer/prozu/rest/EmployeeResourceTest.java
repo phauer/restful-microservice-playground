@@ -7,10 +7,15 @@ import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.file.Paths;
 
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.stream.JsonGenerator;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.junit.Before;
@@ -26,6 +31,7 @@ import de.philipphauer.prozu.MongoDbTestUtil;
 import de.philipphauer.prozu.ProZuApplication;
 import de.philipphauer.prozu.configuration.ProZuConfiguration;
 import de.philipphauer.prozu.di.service.ServiceTestRunner;
+import de.philipphauer.prozu.rest.util.MediaTypeWithCharset;
 
 @RunWith(ServiceTestRunner.class)
 public class EmployeeResourceTest {
@@ -40,9 +46,11 @@ public class EmployeeResourceTest {
 	@Inject
 	private MongoDbTestUtil testUtil;
 
+	private static String baseUrl;
+
 	@BeforeClass
 	public static void initClient() {
-		String baseUrl = String.format("http://localhost:%d/v1/employees", RULE.getLocalPort());
+		baseUrl = String.format("http://localhost:%d/v1/employees", RULE.getLocalPort());
 		client = new JerseyClientBuilder(RULE.getEnvironment()).build("test client").target(baseUrl);
 	}
 
@@ -92,4 +100,21 @@ public class EmployeeResourceTest {
 		}
 	}
 
+	@Test
+	public void createEmployee() {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		JsonGenerator generator = Json.createGenerator(out);
+		generator.writeStartObject()
+				.write("name", "Test Employee")
+				.writeEnd()
+				.close();
+		String json = new String(out.toByteArray());
+
+		Entity<String> testEntity = Entity.entity(json, MediaType.APPLICATION_JSON);
+		Response response = client.request(MediaTypeWithCharset.APPLICATION_JSON_UTF8).post(testEntity);
+
+		System.out.println(response.readEntity(String.class));
+		assertThat(response.getStatus(), is(200));
+		assertThat(response.getLocation(), equalTo(baseUrl + "/11"));
+	}
 }
