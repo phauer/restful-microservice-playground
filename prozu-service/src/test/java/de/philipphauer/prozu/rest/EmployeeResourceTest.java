@@ -38,6 +38,8 @@ import de.philipphauer.prozu.rest.util.MediaTypeWithCharset;
 @RunWith(ServiceTestRunner.class)
 public class EmployeeResourceTest {
 
+	// TODO use rest-assured instead
+
 	@ClassRule
 	public static final DropwizardAppRule<ProZuConfiguration> RULE =
 			new DropwizardAppRule<ProZuConfiguration>(ProZuApplication.class,
@@ -48,11 +50,9 @@ public class EmployeeResourceTest {
 	@Inject
 	private MongoDbTestUtil testUtil;
 
-	private static String baseUrl;
-
 	@BeforeClass
 	public static void initClient() {
-		baseUrl = String.format("http://localhost:%d/v1/employees", RULE.getLocalPort());
+		String baseUrl = String.format("http://localhost:%d/v1/employees", RULE.getLocalPort());
 		client = new JerseyClientBuilder(RULE.getEnvironment()).build("test client").target(baseUrl);
 	}
 
@@ -106,16 +106,9 @@ public class EmployeeResourceTest {
 
 	@Test
 	public void createEmployee() {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		JsonGenerator generator = Json.createGenerator(out);
-		generator.writeStartObject()
-				.write("name", "Test Employee")
-				.writeEnd()
-				.close();
-		String json = new String(out.toByteArray());
-
-		Entity<String> testEntity = Entity.entity(json, MediaType.APPLICATION_JSON);
-		Response creationResponse = client.request(MediaTypeWithCharset.APPLICATION_JSON_UTF8).post(testEntity);
+		String employeeName = "Test Employee";
+		Entity<String> jsonEntity = createEmployeeJsonEntity(employeeName);
+		Response creationResponse = client.request(MediaTypeWithCharset.APPLICATION_JSON_UTF8).post(jsonEntity);
 
 		assertThat(creationResponse.getStatus(), is(201));
 		URI urlOfNewEmployee = creationResponse.getLocation();
@@ -123,8 +116,20 @@ public class EmployeeResourceTest {
 
 		Response getResponse = new JerseyClientBuilder(RULE.getEnvironment()).build("create test client").target(
 				urlOfNewEmployee).request().get();
-		JsonNode employeeJson = getResponse.readEntity(JsonNode.class);
 		assertThat(getResponse.getStatus(), equalTo(200));
-		assertThat(employeeJson.get("name").asText(), equalTo("Test Employee"));
+		JsonNode employeeJson = getResponse.readEntity(JsonNode.class);
+		assertThat(employeeJson.get("name").asText(), equalTo(employeeName));
+	}
+
+	private Entity<String> createEmployeeJsonEntity(String name) {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		JsonGenerator generator = Json.createGenerator(out);
+		generator.writeStartObject()
+				.write("name", name)
+				.writeEnd()
+				.close();
+		String json = new String(out.toByteArray());
+		Entity<String> testEntity = Entity.entity(json, MediaType.APPLICATION_JSON);
+		return testEntity;
 	}
 }
