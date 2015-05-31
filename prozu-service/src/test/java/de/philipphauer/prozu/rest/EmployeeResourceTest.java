@@ -10,7 +10,7 @@ import io.dropwizard.testing.junit.DropwizardAppRule;
 import java.nio.file.Paths;
 
 import javax.inject.Inject;
-import javax.ws.rs.client.Client;
+import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
 import org.junit.Before;
@@ -35,31 +35,26 @@ public class EmployeeResourceTest {
 			new DropwizardAppRule<ProZuConfiguration>(ProZuApplication.class,
 					ResourceHelpers.resourceFilePath("test-config.yml"));
 
-	private static Client client;
+	private static WebTarget client;
 
 	@Inject
 	private MongoDbTestUtil testUtil;
 
-	private String baseUrl;
-	private String employeesBaseUrl;
-
 	@BeforeClass
 	public static void initClient() {
-		client = new JerseyClientBuilder(RULE.getEnvironment()).build("test client");
+		String baseUrl = String.format("http://localhost:%d/v1/employees", RULE.getLocalPort());
+		client = new JerseyClientBuilder(RULE.getEnvironment()).build("test client").target(baseUrl);
 	}
 
 	@Before
 	public void init() {
 		testUtil.clearEmployees();
-		baseUrl = String.format("http://localhost:%d/v1/", RULE.getLocalPort());
-		employeesBaseUrl = baseUrl + "employees";
+		testUtil.writeJsonFileToDb(Paths.get("src/test/resources/employees_10.json"));
 	}
 
 	@Test
 	public void getAllEmployees() {
-		testUtil.writeJsonFileToDb(Paths.get("src/test/resources/employees_10.json"));
-
-		Response response = client.target(employeesBaseUrl).request().get();
+		Response response = client.request().get();
 		JsonNode json = response.readEntity(JsonNode.class);
 
 		assertThat(response.getStatus(), equalTo(200));
@@ -68,9 +63,7 @@ public class EmployeeResourceTest {
 
 	@Test
 	public void getAllEmployeesSearch() {
-		testUtil.writeJsonFileToDb(Paths.get("src/test/resources/employees_10.json"));
-
-		Response response = client.target(employeesBaseUrl + "?search=Paul").request().get();
+		Response response = client.queryParam("search", "Paul").request().get();
 		JsonNode json = response.readEntity(JsonNode.class);
 
 		assertThat(response.getStatus(), equalTo(200));
@@ -79,9 +72,7 @@ public class EmployeeResourceTest {
 
 	@Test
 	public void getAllEmployee() {
-		testUtil.writeJsonFileToDb(Paths.get("src/test/resources/employees_10.json"));
-
-		Response response = client.target(employeesBaseUrl + "/0").request().get();
+		Response response = client.path("0").request().get();
 		JsonNode json = response.readEntity(JsonNode.class);
 
 		assertThat(response.getStatus(), equalTo(200));
@@ -90,9 +81,7 @@ public class EmployeeResourceTest {
 
 	@Test
 	public void getAllProjectDays() {
-		testUtil.writeJsonFileToDb(Paths.get("src/test/resources/employees_10.json"));
-
-		Response response = client.target(employeesBaseUrl + "/0/projectdays").request().get();
+		Response response = client.path("0/projectdays").request().get();
 		ArrayNode json = response.readEntity(ArrayNode.class);
 
 		assertThat(response.getStatus(), equalTo(200));
@@ -102,4 +91,5 @@ public class EmployeeResourceTest {
 			assertThat(projectDay.hasNonNull("daysCount"), is(true));
 		}
 	}
+
 }
