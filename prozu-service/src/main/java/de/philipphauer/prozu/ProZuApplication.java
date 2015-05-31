@@ -10,6 +10,7 @@ import com.hubspot.dropwizard.guice.GuiceBundle;
 import de.philipphauer.prozu.configuration.ProZuConfiguration;
 import de.philipphauer.prozu.healthchecks.TemplateHealthCheck;
 import de.philipphauer.prozu.rest.EmployeeResource;
+import de.philipphauer.prozu.util.ser.DummyDataInitializer;
 
 public class ProZuApplication extends Application<ProZuConfiguration> {
 
@@ -46,9 +47,9 @@ public class ProZuApplication extends Application<ProZuConfiguration> {
 		environment.healthChecks().register("template", healthCheck);
 		environment.jersey().register(EmployeeResource.class);
 
-		//TODO close connection to mongodb
-		//		DummyDataInitializer dummyInitializer = guiceBundle.getInjector().getInstance(DummyDataInitializer.class);
-		//		dummyInitializer.initDummyData();
+		// TODO close connection to mongodb
+		DummyDataInitializer dummyInitializer = guiceBundle.getInjector().getInstance(DummyDataInitializer.class);
+		dummyInitializer.initDummyData();
 	}
 
 }
