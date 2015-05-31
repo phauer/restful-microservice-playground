@@ -1,6 +1,6 @@
 package de.philipphauer.prozu.repo.mongodb;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.time.YearMonth;
 import java.util.ArrayList;
@@ -11,6 +11,8 @@ import javax.inject.Inject;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -60,6 +62,13 @@ public class MongoDBEmployeeDAOTest {
 
 		long count = dao.getEmployeeCount(Optional.of("P"));
 		assertEquals(2, count);
+	}
+
+	@Test
+	public void createEmployee() {
+		Employee employee = dao.createEmployee("Neuer Employee");
+		assertThat(dao.getAllEmployees().size(), Is.is(1));
+		assertThat(employee.getId(), IsNull.notNullValue());
 	}
 
 }

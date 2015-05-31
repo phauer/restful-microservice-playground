@@ -1,13 +1,13 @@
 package de.philipphauer.prozu.rest;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.*;
 import io.dropwizard.client.JerseyClientBuilder;
 import io.dropwizard.testing.ResourceHelpers;
 import io.dropwizard.testing.junit.DropwizardAppRule;
 
 import java.io.ByteArrayOutputStream;
+import java.net.URI;
 import java.nio.file.Paths;
 
 import javax.inject.Inject;
@@ -18,6 +18,7 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.hamcrest.core.IsNull;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -79,7 +80,7 @@ public class EmployeeResourceTest {
 		assertThat(json.get("totalCount").asInt(), equalTo(2));
 	}
 
-	@Ignore("we use mongodbid instead of our own id. hence, '0' doesn't work any longer")
+	@Ignore("we now using the mongodb-id instead of our own id. hence, '0' doesn't work any longer")
 	@Test
 	public void getAllEmployee() {
 		Response response = client.path("0").request().get();
@@ -89,7 +90,7 @@ public class EmployeeResourceTest {
 		assertThat(json.get("name").asText(), equalTo("Paul Persch"));
 	}
 
-	@Ignore("we use mongodbid instead of our own id. hence, '0' doesn't work any longer")
+	@Ignore("we now using the mongodb-id instead of our own id. hence, '0' doesn't work any longer")
 	@Test
 	public void getAllProjectDays() {
 		Response response = client.path("0/projectdays").request().get();
@@ -114,10 +115,16 @@ public class EmployeeResourceTest {
 		String json = new String(out.toByteArray());
 
 		Entity<String> testEntity = Entity.entity(json, MediaType.APPLICATION_JSON);
-		Response response = client.request(MediaTypeWithCharset.APPLICATION_JSON_UTF8).post(testEntity);
+		Response creationResponse = client.request(MediaTypeWithCharset.APPLICATION_JSON_UTF8).post(testEntity);
 
-		System.out.println(response.readEntity(String.class));
-		assertThat(response.getStatus(), is(200));
-		assertThat(response.getLocation(), equalTo(baseUrl + "/11"));
+		assertThat(creationResponse.getStatus(), is(201));
+		URI urlOfNewEmployee = creationResponse.getLocation();
+		assertThat(urlOfNewEmployee, IsNull.notNullValue());
+
+		Response getResponse = new JerseyClientBuilder(RULE.getEnvironment()).build("create test client").target(
+				urlOfNewEmployee).request().get();
+		JsonNode employeeJson = getResponse.readEntity(JsonNode.class);
+		assertThat(getResponse.getStatus(), equalTo(200));
+		assertThat(employeeJson.get("name").asText(), equalTo("Test Employee"));
 	}
 }

@@ -10,6 +10,7 @@ import jersey.repackaged.com.google.common.collect.Lists;
 import org.mongojack.DBCursor;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
+import org.mongojack.WriteResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
@@ -72,8 +73,9 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 	@Override
 	public Employee createEmployee(String name) {
 		Employee employee = new Employee(name);
-		col.insert(employee);
-		return employee;
+		WriteResult<Employee, String> result = col.insert(employee);
+		Employee employeeWithId = col.findOneById(result.getSavedId());
+		return employeeWithId;
 	}
 
 	@Override
