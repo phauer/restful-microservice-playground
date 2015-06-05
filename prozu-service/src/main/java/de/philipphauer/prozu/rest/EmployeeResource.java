@@ -30,6 +30,7 @@ import de.philipphauer.prozu.model.Employee;
 import de.philipphauer.prozu.model.ProjectDays;
 import de.philipphauer.prozu.repo.EmployeeDAO;
 import de.philipphauer.prozu.rest.exception.ProZuClientErrorException;
+import de.philipphauer.prozu.rest.request.EmployeeData;
 import de.philipphauer.prozu.rest.responses.EmployeeResponse;
 import de.philipphauer.prozu.rest.responses.EmployeesResponse;
 import de.philipphauer.prozu.rest.responses.ProjectDaysResponse;
@@ -55,7 +56,7 @@ public class EmployeeResource {
 	 * GET, Read
 	 */
 
-	@ApiOperation(value = "Get all employees", notes = "Use limit, offset and search to parameterize your request", response = EmployeesResponse.class)
+	@ApiOperation(value = "Get all employees", notes = "Interact with employee resources", response = EmployeesResponse.class)
 	@GET
 	@Path("/")
 	@Produces(MediaTypeWithCharset.APPLICATION_JSON_UTF8)
@@ -90,6 +91,7 @@ public class EmployeeResource {
 		throw new ProZuClientErrorException("No Employee with id " + employeeId + " found.", 9);
 	}
 
+	@ApiOperation(value = "Get the project day for an employee", response = ProjectDaysResponse.class)
 	@GET
 	@Path("/{employeeId}/projectdays/")
 	@Produces(MediaTypeWithCharset.APPLICATION_JSON_UTF8)
@@ -104,10 +106,13 @@ public class EmployeeResource {
 	 * POST, Create
 	 */
 
+	@ApiOperation(value = "Creates a new employee")
 	@POST
 	@Path("/")
 	@Consumes(MediaTypeWithCharset.APPLICATION_JSON_UTF8)
-	public Response createEmployee(EmployeeResponse newEmployeeData) throws URISyntaxException {
+	public Response createEmployee(
+			@ApiParam(value = "employee data", required = true) EmployeeData newEmployeeData)
+			throws URISyntaxException {
 		Employee employee = dao.createEmployee(newEmployeeData.getName());
 
 		URI uri = createNewLocationURI(employee.getId());
@@ -128,11 +133,13 @@ public class EmployeeResource {
 	 * PUT, Update
 	 */
 
+	@ApiOperation(value = "Updates a given employee")
 	@PUT
 	@Path("/{employeeId}")
 	@Consumes(MediaTypeWithCharset.APPLICATION_JSON_UTF8)
-	public Response updateEmployee(@PathParam("employeeId") String employeeId,
-			EmployeeResponse newEmployeeData) {
+	public Response updateEmployee(
+			@ApiParam(value = "the id of the employee to be updated") @PathParam("employeeId") String employeeId,
+			@ApiParam(value = "the new employee data", required = true) EmployeeData newEmployeeData) {
 		String name = newEmployeeData.getName();
 		dao.updateEmployee(employeeId, name);
 		return Response.ok().build();
@@ -142,9 +149,9 @@ public class EmployeeResource {
 	 * DELETE, delete
 	 */
 
+	@ApiOperation(value = "Deletes an employee")
 	@DELETE
 	@Path("/{employeeId}")
-	@Consumes(MediaTypeWithCharset.APPLICATION_JSON_UTF8)
 	public Response deleteEmployee(@PathParam("employeeId") String employeeId) {
 		dao.deleteEmployee(employeeId);
 		return Response.ok().build();

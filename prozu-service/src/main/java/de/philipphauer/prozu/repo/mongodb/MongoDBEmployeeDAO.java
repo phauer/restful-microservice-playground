@@ -80,7 +80,8 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 
 	@Override
 	public void updateEmployee(String id, String name) {
-		throw new UnsupportedOperationException();
+		Employee employee = new Employee(name);
+		col.updateById(id, employee);
 	}
 
 	@Override
@@ -95,7 +96,7 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 
 	@Override
 	public void deleteEmployee(String employeeId) {
-		throw new UnsupportedOperationException();
+		col.removeById(employeeId);
 	}
 
 	@Override
