@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer;
 
+@SuppressWarnings("serial")
 public class YearMonthDeserializer extends StdScalarDeserializer<YearMonth> {
 
 	public YearMonthDeserializer() {

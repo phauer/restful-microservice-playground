@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
+@SuppressWarnings("serial")
 public class YearMonthSerializer extends StdSerializer<YearMonth> {
 
 	public YearMonthSerializer() {
