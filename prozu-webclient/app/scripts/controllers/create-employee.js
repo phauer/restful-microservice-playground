@@ -9,7 +9,7 @@
  */
 angular.module('yeomanPlaygroundApp')
   .factory('EmployeeRes', function ($resource) {
-        return $resource('http://localhost:8080/v1/employees');
+        return $resource('http://localhost:8080/employees');
   })
   .controller('CreateEmployeeCtrl', ['$scope','EmployeeRes', function ($scope, EmployeeRes) {
     console.log("create")

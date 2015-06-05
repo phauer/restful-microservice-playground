@@ -13,7 +13,7 @@
   angular
   .module('yeomanPlaygroundApp')
   .factory('EmployeeRes', function ($resource) {
-        return $resource('http://localhost:8080/v1/employees', {limit:PAGE_SIZE, offset:0});
+        return $resource('http://localhost:8080/employees', {limit:PAGE_SIZE, offset:0});
   })
   .controller('MainCtrl', ['$scope', 'EmployeeRes', '$timeout', function($scope, EmployeeRes, $timeout) {
     $scope.itemsPerPage = PAGE_SIZE;
