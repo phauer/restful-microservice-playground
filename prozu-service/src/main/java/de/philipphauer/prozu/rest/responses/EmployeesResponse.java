@@ -7,6 +7,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.collect.Lists;
+import com.wordnik.swagger.annotations.ApiModel;
+import com.wordnik.swagger.annotations.ApiModelProperty;
 
 import de.philipphauer.prozu.rest.URLConstants;
 
@@ -14,9 +16,11 @@ import de.philipphauer.prozu.rest.URLConstants;
  * data & metadata
  *
  */
+@ApiModel(value = "A list of employees and some meta data.")
 @XmlRootElement
 public class EmployeesResponse {
 
+	@ApiModelProperty(value = "the total amount of employees matching the request.")
 	private long totalCount;
 	private List<EmployeeResponse> employees;
 	private int limit;

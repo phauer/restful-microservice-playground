@@ -1,6 +1,7 @@
 package de.philipphauer.prozu.configuration;
 
 import io.dropwizard.Configuration;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,9 @@ public class ProZuConfiguration extends Configuration {
 	@NotNull
 	@Valid
 	private MongoDBConfig mongoDB;
+
+	@JsonProperty("swagger")
+	public SwaggerBundleConfiguration swaggerBundleConfiguration;
 
 	@JsonProperty
 	public String getTemplate() {

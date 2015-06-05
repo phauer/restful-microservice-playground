@@ -20,6 +20,11 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.google.inject.Inject;
+import com.wordnik.swagger.annotations.Api;
+import com.wordnik.swagger.annotations.ApiOperation;
+import com.wordnik.swagger.annotations.ApiParam;
+import com.wordnik.swagger.annotations.ApiResponse;
+import com.wordnik.swagger.annotations.ApiResponses;
 
 import de.philipphauer.prozu.model.Employee;
 import de.philipphauer.prozu.model.ProjectDays;
@@ -31,6 +36,7 @@ import de.philipphauer.prozu.rest.responses.ProjectDaysResponse;
 import de.philipphauer.prozu.rest.util.EntityMapper;
 import de.philipphauer.prozu.rest.util.MediaTypeWithCharset;
 
+@Api(value = URLConstants.EMPLOYEES, description = "REST API to interact with employee resources.")
 @Path(URLConstants.EMPLOYEES)
 public class EmployeeResource {
 
@@ -49,11 +55,14 @@ public class EmployeeResource {
 	 * GET, Read
 	 */
 
+	@ApiOperation(value = "Get all employees", notes = "Use limit, offset and search to parameterize your request", response = EmployeesResponse.class)
 	@GET
 	@Path("/")
 	@Produces(MediaTypeWithCharset.APPLICATION_JSON_UTF8)
-	public EmployeesResponse getAllEmployees(@QueryParam("limit") Integer limit,
-			@QueryParam("offset") Integer offset, @QueryParam("search") String search) {
+	public EmployeesResponse getAllEmployees(
+			@ApiParam(value = "limits the result set", required = false, defaultValue = "10") @QueryParam("limit") Integer limit,
+			@ApiParam(value = "the offset", required = false, defaultValue = "0") @QueryParam("offset") Integer offset,
+			@ApiParam(value = "search for names that contains the given string. not case sensetive. ", required = false) @QueryParam("search") String search) {
 		int usedLimit = limit == null ? 10 : limit;
 		int usedOffset = offset == null ? 0 : offset;
 		Optional<String> usedSearch = Optional.ofNullable(search);
@@ -64,10 +73,15 @@ public class EmployeeResource {
 		return response;
 	}
 
+	@ApiOperation(value = "Get an employees wit a certain ID", response = EmployeeResponse.class)
+	@ApiResponses(value = {
+			@ApiResponse(code = 400, message = "Invalid ID supplied"),
+	})
 	@GET
 	@Path("/{employeeId}")
 	@Produces(MediaTypeWithCharset.APPLICATION_JSON_UTF8)
-	public EmployeeResponse getEmployee(@PathParam("employeeId") int employeeId) {
+	public EmployeeResponse getEmployee(
+			@ApiParam(value = "the id of the employee", required = true) @PathParam("employeeId") int employeeId) {
 		Optional<Employee> employee = dao.getEmployee(employeeId);
 		if (employee.isPresent()) {
 			EmployeeResponse rEmployee = mapper.mapToREmployee(employee.get());

@@ -3,6 +3,8 @@ package de.philipphauer.prozu;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hubspot.dropwizard.guice.GuiceBundle;
@@ -38,6 +40,12 @@ public class ProZuApplication extends Application<ProZuConfiguration> {
 				.build();
 		bootstrap.addBundle(guiceBundle);
 
+		//accessible via http://localhost:<your_port>/swagger
+		bootstrap.addBundle(new SwaggerBundle<ProZuConfiguration>() {
+			protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(ProZuConfiguration configuration) {
+				return configuration.swaggerBundleConfiguration;
+			}
+		});
 	}
 
 	@Override
