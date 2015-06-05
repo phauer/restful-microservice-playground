@@ -10,6 +10,7 @@ import jersey.repackaged.com.google.common.collect.Lists;
 import org.mongojack.DBCursor;
 import org.mongojack.DBQuery;
 import org.mongojack.JacksonDBCollection;
+import org.mongojack.WriteResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
@@ -38,8 +39,8 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 	}
 
 	@Override
-	public Optional<Employee> getEmployee(long employeeId) {
-		Employee employee = col.findOne(DBQuery.is(Employee.ID, employeeId));
+	public Optional<Employee> getEmployee(String employeeId) {
+		Employee employee = col.findOneById(employeeId);
 		return Optional.ofNullable(employee);
 	}
 
@@ -60,7 +61,7 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 	}
 
 	@Override
-	public List<ProjectDays> getAllProjectDays(long employeeId) {
+	public List<ProjectDays> getAllProjectDays(String employeeId) {
 		Optional<Employee> employee = getEmployee(employeeId);
 		if (employee.isPresent()) {
 			return employee.get().getProjectDays();
@@ -71,11 +72,14 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 
 	@Override
 	public Employee createEmployee(String name) {
-		throw new UnsupportedOperationException();
+		Employee employee = new Employee(name);
+		WriteResult<Employee, String> result = col.insert(employee);
+		Employee employeeWithId = col.findOneById(result.getSavedId());
+		return employeeWithId;
 	}
 
 	@Override
-	public void updateEmployee(long id, String name) {
+	public void updateEmployee(String id, String name) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -90,7 +94,7 @@ public class MongoDBEmployeeDAO implements EmployeeDAO {
 	}
 
 	@Override
-	public void deleteEmployee(long employeeId) {
+	public void deleteEmployee(String employeeId) {
 		throw new UnsupportedOperationException();
 	}
 

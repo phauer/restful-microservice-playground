@@ -70,10 +70,17 @@
 			<artifactId>morphia</artifactId>
 			<version>0.111</version>
 		</dependency>
-		<dependency><!-- revolve conflict between jackson 2.5.1 (used by dropwizard) and 2.4.4 (used by mongodb) -->
+		<dependency><!-- revolve conflict between jackson 2.5.1 (used by dropwizard) 
+				and 2.4.4 (used by mongodb) -->
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.5.1</version>
+		</dependency>
+	<!-- i like this json api more -->
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.json</artifactId>
+			<version>1.0.4</version>
 		</dependency>
 		<!--  generating swagger specification from jax-rs annotations. access via http://localhost:<your_port>/swagger -->
 		<dependency>

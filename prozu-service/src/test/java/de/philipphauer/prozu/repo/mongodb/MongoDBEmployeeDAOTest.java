@@ -11,6 +11,8 @@ import javax.inject.Inject;
 
 import jersey.repackaged.com.google.common.collect.Lists;
 
+import org.hamcrest.core.Is;
+import org.hamcrest.core.IsNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +37,7 @@ public class MongoDBEmployeeDAOTest {
 	@Test
 	public void find() {
 		String name = "Albert Stark";
-		Employee employee = new Employee(name, 0);
+		Employee employee = new Employee(name);
 		YearMonth yearMonth = YearMonth.now();
 		employee.addProjectDays(new ProjectDays(yearMonth, 5));
 
@@ -53,13 +55,20 @@ public class MongoDBEmployeeDAOTest {
 	@Test
 	public void countWithSearch() {
 		ArrayList<Employee> employees = Lists.newArrayList(
-				new Employee("Albert Stark", 0),
-				new Employee("Peter Müller", 0),
-				new Employee("Paul Köhler", 0));
+				new Employee("Albert Stark"),
+				new Employee("Peter Müller"),
+				new Employee("Paul Köhler"));
 		dao.saveAll(employees);
 
 		long count = dao.getEmployeeCount(Optional.of("P"));
 		assertEquals(2, count);
+	}
+
+	@Test
+	public void createEmployee() {
+		Employee employee = dao.createEmployee("Neuer Employee");
+		assertThat(dao.getAllEmployees().size(), Is.is(1));
+		assertThat(employee.getId(), IsNull.notNullValue());
 	}
 
 }

@@ -12,19 +12,19 @@ import de.philipphauer.prozu.rest.URLConstants;
 @XmlRootElement
 public class EmployeeResponse {
 
-	private long id;
+	private String id;
 
 	private String name;
 
 	public EmployeeResponse() {
 	}
 
-	public EmployeeResponse(long id, String name) {
+	public EmployeeResponse(String id, String name) {
 		this.id = id;
 		this.name = name;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -33,8 +33,8 @@ public class EmployeeResponse {
 	}
 
 	/*
-	 * "links": [ { "rel": "something-related", "href": "/arbitrary/link" }, {
-	 * "rel": "something-else-related", "href": "/another/arbitrary/link" }
+	 * "links": [ { "rel": "something-related", "href": "/arbitrary/link" }, { "rel": "something-else-related", "href":
+	 * "/another/arbitrary/link" }
 	 */
 	@XmlElement(name = "links")
 	public List<LinkResponse> getLinks() {

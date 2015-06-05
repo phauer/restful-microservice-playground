@@ -8,20 +8,19 @@ import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.mongojack.ObjectId;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Lists;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Employee {
 
 	public static final String NAME = "name";
-	public static final String ID = "id";
 
 	@ObjectId
 	@JsonProperty("_id")
-	private String mondoDBId;
-
-	private long id;
+	private String id;
 
 	@NotNull
 	@NotEmpty
@@ -36,12 +35,6 @@ public class Employee {
 
 	public Employee(String name) {
 		this.name = name;
-		projectDays = Lists.newArrayList();
-	}
-
-	public Employee(String name, long id) {
-		this.name = name;
-		this.id = id;
 		projectDays = Lists.newArrayList();
 	}
 
@@ -61,7 +54,7 @@ public class Employee {
 		this.name = name;
 	}
 
-	public long getId() {
+	public String getId() {
 		return id;
 	}
 

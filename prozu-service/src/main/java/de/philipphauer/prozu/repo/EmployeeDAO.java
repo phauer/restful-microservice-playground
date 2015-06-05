@@ -10,21 +10,21 @@ public interface EmployeeDAO {
 
 	List<Employee> getAllEmployees();
 
-	Optional<Employee> getEmployee(long employeeId);
+	Optional<Employee> getEmployee(String employeeId);
 
 	List<Employee> getEmployees(int limit, int offset, Optional<String> search);
 
-	List<ProjectDays> getAllProjectDays(long employeeId);
+	List<ProjectDays> getAllProjectDays(String employeeId);
 
 	Employee createEmployee(String name);
 
-	void updateEmployee(long id, String name);
+	void updateEmployee(String id, String name);
 
 	void save(Employee employee);
 
 	void saveAll(List<Employee> employees);
 
-	void deleteEmployee(long employeeId);
+	void deleteEmployee(String employeeId);
 
 	long getEmployeeCount(Optional<String> usedSearch);
 
