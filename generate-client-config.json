@@ -1,0 +1,8 @@
+{
+  "groupId":"de.philipphauer",
+  "artifactId":"prozu-generated-client",
+  "artifactVersion":"0.0.1",
+  "invokerPackage": "de.philipphauer.prozuclient",
+  "modelPackage": "de.philipphauer.prozuclient.model",
+  "apiPackage": "de.philipphauer.prozuclient.api"
+}
