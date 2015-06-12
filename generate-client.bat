@@ -8,8 +8,7 @@ if not exist "%FILENAME%" (
 echo "you have to start the service first for accessing the swagger.json"
 java -jar "%FILENAME%" generate -i http://localhost:8080/swagger.json -l java -c ./generate-client-config.json -o ./%PROJECTNAME%
 
-pause
-
 cd ./%PROJECTNAME%
 mvn install
 
+pause
