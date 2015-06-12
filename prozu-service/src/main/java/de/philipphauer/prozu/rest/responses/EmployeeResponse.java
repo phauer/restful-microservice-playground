@@ -6,11 +6,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.google.common.collect.Lists;
-import com.wordnik.swagger.annotations.ApiModel;
 
 import de.philipphauer.prozu.rest.URLConstants;
 
-@ApiModel(value = "information about a single employee.")
 @XmlRootElement
 public class EmployeeResponse {
 
