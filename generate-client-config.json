@@ -1,6 +1,6 @@
 {
   "groupId":"de.philipphauer",
-  "artifactId":"prozu-service-client",
+  "artifactId":"prozu-service-client-library",
   "artifactVersion":"0.0.1",
   "invokerPackage": "de.philipphauer.prozu.service.client",
   "modelPackage": "de.philipphauer.prozu.service.client.model",

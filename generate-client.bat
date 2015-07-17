@@ -3,7 +3,7 @@ rem a) start service and use http://localhost:8080/swagger.json
 rem b) build service project and use .\prozu-service\target\swagger\swagger-ui\swagger.json
 
 SET "FILENAME=%~dp0\swagger-codegen-cli.jar"
-SET "PROJECTNAME=prozu-service-client"
+SET "PROJECTNAME=prozu-service-client-library"
 
 rd /s /q "%PROJECTNAME%"	
 
