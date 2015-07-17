@@ -52,7 +52,7 @@ public class EmployeeResourceTest {
 
 	@BeforeClass
 	public static void initClient() {
-		String baseUrl = String.format("http://localhost:%d/v1/employees", RULE.getLocalPort());
+		String baseUrl = String.format("http://localhost:%d/employees", RULE.getLocalPort());
 		client = new JerseyClientBuilder(RULE.getEnvironment()).build("test client").target(baseUrl);
 	}
 
