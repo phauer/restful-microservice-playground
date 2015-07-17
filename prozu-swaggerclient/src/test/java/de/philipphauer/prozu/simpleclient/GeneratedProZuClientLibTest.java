@@ -1,8 +1,10 @@
 package de.philipphauer.prozu.simpleclient;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.philipphauer.prozu.ProZuApplication;
 import de.philipphauer.prozu.service.client.ApiClient;
 import de.philipphauer.prozu.service.client.ApiException;
 import de.philipphauer.prozu.service.client.api.EmployeesApi;
@@ -18,6 +20,12 @@ public class GeneratedProZuClientLibTest {
 	 * but the generated client library uses an outdated jersey version.
 	 * This leads to an conflict with the jersey version of the service project.
 	 */
+
+	@BeforeClass
+	public static void startServer() throws Exception {
+		new ProZuApplication().run("server", "src/test/resources/test-config.yml");
+		//TODO doesn't work. jersey NoSuchMethodeError... conflicting jersey versions...
+	}
 
 	@Test
 	public void test() throws ApiException {

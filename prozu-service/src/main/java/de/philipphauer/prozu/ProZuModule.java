@@ -40,6 +40,7 @@ public class ProZuModule extends AbstractModule {
 	}
 
 	//@Singleton//TODO doesn't work with guice-bundle. see https://github.com/HubSpot/dropwizard-guice/issues/40
+	//TODO use connection pooling (jetty datasource)
 	@Provides
 	public DBCollection get(ProZuConfiguration config) {
 		try {
