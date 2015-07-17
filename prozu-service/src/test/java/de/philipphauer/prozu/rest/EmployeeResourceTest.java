@@ -3,25 +3,17 @@ package de.philipphauer.prozu.rest;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 import io.dropwizard.client.JerseyClientBuilder;
-import io.dropwizard.testing.ResourceHelpers;
-import io.dropwizard.testing.junit.DropwizardAppRule;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
-import java.nio.file.Paths;
 
-import javax.inject.Inject;
 import javax.json.Json;
 import javax.json.stream.JsonGenerator;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.hamcrest.core.IsNull;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,38 +21,13 @@ import org.junit.runner.RunWith;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
-import de.philipphauer.prozu.MongoDbTestUtil;
-import de.philipphauer.prozu.ProZuApplication;
-import de.philipphauer.prozu.configuration.ProZuConfiguration;
 import de.philipphauer.prozu.di.service.ServiceTestRunner;
 import de.philipphauer.prozu.rest.util.MediaTypeWithCharset;
 
 @RunWith(ServiceTestRunner.class)
-public class EmployeeResourceTest {
+public class EmployeeResourceTest extends AbstractEmployeeResourceTest {
 
 	// TODO use rest-assured instead
-
-	@ClassRule
-	public static final DropwizardAppRule<ProZuConfiguration> RULE =
-			new DropwizardAppRule<ProZuConfiguration>(ProZuApplication.class,
-					ResourceHelpers.resourceFilePath("test-config.yml"));
-
-	private static WebTarget client;
-
-	@Inject
-	private MongoDbTestUtil testUtil;
-
-	@BeforeClass
-	public static void initClient() {
-		String baseUrl = String.format("http://localhost:%d/employees", RULE.getLocalPort());
-		client = new JerseyClientBuilder(RULE.getEnvironment()).build("test client").target(baseUrl);
-	}
-
-	@Before
-	public void init() {
-		testUtil.clearEmployees();
-		testUtil.writeJsonFileToDb(Paths.get("src/test/resources/employees_10.json"));
-	}
 
 	@Test
 	public void getAllEmployees() {

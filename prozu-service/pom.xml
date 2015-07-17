@@ -71,13 +71,13 @@
 			<artifactId>morphia</artifactId>
 			<version>0.111</version>
 		</dependency>
-		<dependency><!-- revolve conflict between jackson 2.5.1 (used by dropwizard) 
-				and 2.4.4 (used by mongodb) -->
+		<!-- revolve conflict between jackson 2.5.1 (used by dropwizard) and 2.4.4 (used by mongodb) -->
+		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>2.5.1</version>
 		</dependency>
-	<!-- i like this json api more -->
+		<!-- i like this json api more -->
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>javax.json</artifactId>
@@ -89,6 +89,14 @@
 			<artifactId>dropwizard-swagger</artifactId>
 			<version>0.7.0</version>
 		</dependency>
+		<!-- testing the swagger generated client library (generated from swagger.json; which in turn is generated from this JAX-RS resource classes) 
+		causing version conflict because generated lib uses very old jersey version :-( -->
+		<!-- dependency>
+			<groupId>de.philipphauer</groupId>
+			<artifactId>prozu-service-client-library</artifactId>
+			<version>0.0.1</version>
+			<scope>test</scope>
+		</dependency -->
 	</dependencies>
 	<build>
 		<plugins>
