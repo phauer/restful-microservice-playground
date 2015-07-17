@@ -9,6 +9,7 @@
 		<java.version>1.8</java.version>
 		<querydsl.version>3.6.3</querydsl.version>
 		<mongodb.driver.version>2.13.1</mongodb.driver.version>
+		<swagger-maven-plugin-version>3.0.1</swagger-maven-plugin-version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -164,6 +165,62 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>com.github.kongchen</groupId>
+				<artifactId>swagger-maven-plugin</artifactId>
+				<version>${swagger-maven-plugin-version}</version>
+				<configuration>
+					<apiSources>
+						<apiSource>
+							<locations>de.philipphauer.prozu.rest</locations>
+							<info>
+								<title>Restful API of the ProZu Service</title>
+								<version>v1</version>
+							</info>
+							<templatePath>${basedir}/src/test/resources/swagger-doc-template/strapdown.html.hbs</templatePath>
+							<outputPath>${basedir}/target/swagger/document.html</outputPath>
+							<swaggerDirectory>${basedir}/target/swagger/swagger-ui</swaggerDirectory>
+						</apiSource>
+					</apiSources>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>compile</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.github.kongchen</groupId>
+										<artifactId>swagger-maven-plugin</artifactId>
+										<versionRange>${swagger-maven-plugin-version}</versionRange>
+										<goals>
+											<goal>generate</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute></execute>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>
