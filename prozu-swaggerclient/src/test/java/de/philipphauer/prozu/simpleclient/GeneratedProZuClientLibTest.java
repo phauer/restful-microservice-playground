@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.philipphauer.prozu.ProZuApplication;
 import de.philipphauer.prozu.service.client.ApiClient;
 import de.philipphauer.prozu.service.client.ApiException;
 import de.philipphauer.prozu.service.client.api.EmployeesApi;
@@ -17,14 +16,16 @@ public class GeneratedProZuClientLibTest {
 
 	/*
 	 * it would be nice to move this test code to the service project (automatically start server, use configured port etc),
-	 * but the generated client library uses an outdated jersey version.
+	 * but the generated client library uses an outdated jersey version (JAX-RS 1.x).
 	 * This leads to an conflict with the jersey version of the service project.
 	 */
 
 	@BeforeClass
 	public static void startServer() throws Exception {
-		new ProZuApplication().run("server", "src/test/resources/test-config.yml");
+		//		new ProZuApplication().run("server", "src/test/resources/test-config.yml");
 		//TODO doesn't work. jersey NoSuchMethodeError... conflicting jersey versions...
+		//https://github.com/swagger-api/swagger-codegen/issues/949
+		//https://github.com/swagger-api/swagger-codegen/pull/950
 	}
 
 	@Test

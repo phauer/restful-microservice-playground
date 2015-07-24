@@ -1,0 +1,14 @@
+template: Hello, %s!
+defaultName: Unbekannter
+mongoDB:
+ databaseName: test
+ employeeCollectionName: employeesServiceTest
+server:
+  applicationConnectors:
+  - type: http 
+    port: 9000
+  adminConnectors:
+  - type: http
+    port: 9001
+swagger:
+  resourcePackage: de.philipphauer.prozu.rest
