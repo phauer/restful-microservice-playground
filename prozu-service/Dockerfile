@@ -5,7 +5,8 @@
 # docker run -it java:8-jre java -version
 # docker run -it java:8-jre //bin/bash
 # docker build -t phauer/prozu-service .
-# docker run -it phauer/prozu-service //bin/bash
+# docker run -p 8080:8080 -it phauer/prozu-service //bin/bash
+# docker run -p 8080:8080 -it --link prozu-mongodb phauer/prozu-service //bin/bash
 
 FROM java:8-jre
 ADD target/prozu-service-0.0.1-SNAPSHOT.jar /data/prozu-service.jar
