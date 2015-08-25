@@ -4,11 +4,12 @@ rem b) build service project and use .\prozu-service\target\swagger\swagger-ui\s
 
 SET "FILENAME=%~dp0\swagger-codegen-cli.jar"
 SET "PROJECTNAME=prozu-service-client-library"
+SET "VERSION=2.1.3"
 
 rd /s /q "%PROJECTNAME%"	
 
 if not exist "%FILENAME%" (
-	bitsadmin /transfer "Downloading swagger-codegen jar" http://search.maven.org/remotecontent?filepath=io/swagger/swagger-codegen-cli/2.1.2/swagger-codegen-cli-2.1.2.jar "%FILENAME%"
+	bitsadmin /transfer "Downloading swagger-codegen jar" http://search.maven.org/remotecontent?filepath=io/swagger/swagger-codegen-cli/%VERSION%/swagger-codegen-cli-%VERSION%.jar "%FILENAME%"
 ) 
 
 echo "you have to start the service first for accessing the swagger.json"

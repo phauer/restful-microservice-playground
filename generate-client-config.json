@@ -4,5 +4,6 @@
   "artifactVersion":"0.0.1",
   "invokerPackage": "de.philipphauer.prozu.service.client",
   "modelPackage": "de.philipphauer.prozu.service.client.model",
-  "apiPackage": "de.philipphauer.prozu.service.client.api"
+  "apiPackage": "de.philipphauer.prozu.service.client.api",
+  "library": "jersey2"
 }

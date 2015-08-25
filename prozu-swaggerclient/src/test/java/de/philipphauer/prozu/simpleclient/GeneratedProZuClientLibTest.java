@@ -19,17 +19,17 @@ public class GeneratedProZuClientLibTest {
 	private EmployeesApi employeesApi;
 
 	/*
-	 * it would be nice to move this test code to the service project (automatically start server, use configured port etc),
-	 * but the generated client library uses an outdated jersey version (JAX-RS 1.x).
-	 * This leads to an conflict with the jersey version of the service project.
+	 * it would be nice to move this test code to the service project (automatically start server, use configured port
+	 * etc), but the generated client library uses an different jersey and jackson version than dropwizard. I guess, I
+	 * should start the dropwizard by running the executable jar in order to avoid version conflicts.
 	 */
 
 	@BeforeClass
 	public static void startServer() throws Exception {
-		//		new ProZuApplication().run("server", "src/test/resources/test-config.yml");
-		//TODO doesn't work. jersey NoSuchMethodeError... conflicting jersey versions...
-		//https://github.com/swagger-api/swagger-codegen/issues/949
-		//https://github.com/swagger-api/swagger-codegen/pull/950
+		// new ProZuApplication().run("server", "src/test/resources/test-config.yml");
+		// TODO doesn't work. jersey NoSuchMethodeError... conflicting jersey and jackson versions...
+		// https://github.com/swagger-api/swagger-codegen/issues/949 <- see my comments.
+		// https://github.com/swagger-api/swagger-codegen/pull/950
 	}
 
 	@Before
@@ -53,7 +53,8 @@ public class GeneratedProZuClientLibTest {
 		EmployeeData employeeData = new EmployeeData();
 		employeeData.setName("Bruce Wayne");
 		employeesApi.createEmployee(employeeData);
-		//TODO how do get the generated id in the location http header? maybe i have to return the id in the http response body...
+		// TODO how do get the generated id in the location http header? maybe i have to return the id in the http
+		// response body...
 
 		EmployeesResponse employeesAfter = employeesApi.getAllEmployees(9999, 0, "");
 		Long employeeCountAfter = employeesAfter.getTotalCount();
