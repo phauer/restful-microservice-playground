@@ -36,6 +36,7 @@ import de.philipphauer.prozu.rest.responses.EmployeesResponse;
 import de.philipphauer.prozu.rest.responses.ProjectDaysResponse;
 import de.philipphauer.prozu.rest.util.EntityMapper;
 import de.philipphauer.prozu.rest.util.MediaTypeWithCharset;
+import de.philipphauer.prozu.util.ser.DummyDataInitializer;
 
 @Api(value = URLConstants.EMPLOYEES, description = "REST API to interact with employee resources.")
 @Path(URLConstants.EMPLOYEES)
@@ -157,4 +158,16 @@ public class EmployeeResource {
 		return Response.ok().build();
 	}
 
+	@Inject
+	private DummyDataInitializer dummyInitializer;
+
+	/*
+	 * Just for simplified testing. I know this is not restful.
+	 */
+	@GET
+	@Path("/createDummy")
+	public Response createDummyEmployees() {
+		dummyInitializer.initDummyData();
+		return Response.ok().build();
+	}
 }
