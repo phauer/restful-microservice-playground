@@ -3,6 +3,9 @@
 # name ist wichtig für späteren link
 # -d -> run container in background
 # -P -> map any required network port inside our container to our host (achtung: wird zufälliger port auf host system) -> explizit mit -p 123:123 setzen
+
+# let's start without links and let the contains communicate via ports
+#docker run -d -p 27017:27017 phauer/mongodb
 #docker ps 
 #docker kill <containerid>
 
@@ -11,7 +14,9 @@
 # richtigen port nehmen, achte auch port forwarding "0.0.0:32770->27017/tcp" -> use 32770
 # wie boot2docker ip rausbekommen? a) steht beim starten der docker shell b) >docker-machine ip <machine name> (machine name ist "default" - einfach die VirtualBox GUI starten)
 
-# mongo --port 32770 --host 192.168.99.100
+# test from host system:
+# mongo --port 27017 --host 192.168.99.100
+# or test with browser http://192.168.99.100:27017/ -> getting error message, but "ok its up and running".
 
 # https://hub.docker.com/_/mongo/
 # https://docs.docker.com/examples/mongodb/
