@@ -10,6 +10,8 @@ import com.google.inject.Provides;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.ServerAddress;
 
 import de.philipphauer.prozu.configuration.MongoDBConfig;
 import de.philipphauer.prozu.configuration.ProZuConfiguration;
@@ -45,8 +47,10 @@ public class ProZuModule extends AbstractModule {
 	@Provides
 	public DBCollection get(ProZuConfiguration config) {
 		try {
+			MongoClientOptions options = new MongoClientOptions.Builder().connectTimeout(1000 * 1).build();
 			MongoDBConfig mongoDBConfig = config.getMongoDB();
-			MongoClient mongoClient = new MongoClient(mongoDBConfig.getHost(), mongoDBConfig.getPort());
+			ServerAddress serverAddress = new ServerAddress(mongoDBConfig.getHost(), mongoDBConfig.getPort());
+			MongoClient mongoClient = new MongoClient(serverAddress, options);
 			DB personDb = mongoClient.getDB(mongoDBConfig.getDatabaseName());
 			DBCollection employeesCollection = personDb.getCollection(mongoDBConfig.getEmployeeCollectionName());
 			return employeesCollection;

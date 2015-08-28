@@ -55,4 +55,11 @@ public class MongoDBConfig {
 	public void setHost(String host) {
 		this.host = host;
 	}
+
+	@Override
+	public String toString() {
+		return "MongoDBConfig [databaseName=" + databaseName + ", employeeCollectionName=" + employeeCollectionName
+				+ ", port=" + port + ", host=" + host + "]";
+	}
+
 }
