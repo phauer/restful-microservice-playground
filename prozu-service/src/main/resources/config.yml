@@ -1,8 +1,0 @@
-template: Hello, %s!
-defaultName: Stranger2
-mongoDB:
- databaseName: test
- employeeCollectionName: employees
-# the only required property is resourcePackage, for more config options see below
-swagger:
-  resourcePackage: de.philipphauer.prozu.rest

@@ -12,6 +12,10 @@ public class MongoDBConfig {
 	@NotEmpty
 	private String employeeCollectionName;
 
+	private int port = 27017;
+
+	private String host = "localhost";
+
 	@JsonProperty
 	public String getDatabaseName() {
 		return databaseName;
@@ -30,5 +34,25 @@ public class MongoDBConfig {
 	@JsonProperty
 	public void setEmployeeCollectionName(String employeeCollectionName) {
 		this.employeeCollectionName = employeeCollectionName;
+	}
+
+	@JsonProperty
+	public int getPort() {
+		return port;
+	}
+
+	@JsonProperty
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	@JsonProperty
+	public String getHost() {
+		return host;
+	}
+
+	@JsonProperty
+	public void setHost(String host) {
+		this.host = host;
 	}
 }

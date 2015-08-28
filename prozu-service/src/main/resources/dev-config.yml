@@ -1,0 +1,9 @@
+template: Hello, %s!
+mongoDB:
+ host: localhost
+ port: 27017
+ databaseName: test
+ employeeCollectionName: employees
+# the only required property is resourcePackage, for more config options see below
+swagger:
+  resourcePackage: de.philipphauer.prozu.rest

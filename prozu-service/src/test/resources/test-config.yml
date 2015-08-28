@@ -1,6 +1,7 @@
 template: Hello, %s!
-defaultName: Unbekannter
 mongoDB:
+ host: localhost
+ port: 27017
  databaseName: test
  employeeCollectionName: employeesServiceTest
 server:

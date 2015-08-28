@@ -16,9 +16,6 @@ public class ProZuConfiguration extends Configuration {
 	@NotEmpty
 	private String template;
 
-	@NotEmpty
-	private String defaultName;
-
 	@NotNull
 	@Valid
 	private MongoDBConfig mongoDB;
@@ -34,16 +31,6 @@ public class ProZuConfiguration extends Configuration {
 	@JsonProperty
 	public void setTemplate(String template) {
 		this.template = template;
-	}
-
-	@JsonProperty
-	public String getDefaultName() {
-		return defaultName;
-	}
-
-	@JsonProperty
-	public void setDefaultName(String name) {
-		this.defaultName = name;
 	}
 
 	@JsonProperty

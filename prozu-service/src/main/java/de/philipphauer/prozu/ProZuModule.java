@@ -11,6 +11,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 
+import de.philipphauer.prozu.configuration.MongoDBConfig;
 import de.philipphauer.prozu.configuration.ProZuConfiguration;
 import de.philipphauer.prozu.repo.EmployeeDAO;
 import de.philipphauer.prozu.repo.exception.RepositoryException;
@@ -44,10 +45,10 @@ public class ProZuModule extends AbstractModule {
 	@Provides
 	public DBCollection get(ProZuConfiguration config) {
 		try {
-			MongoClient mongoClient = new MongoClient();
-			DB personDb = mongoClient.getDB(config.getMongoDB().getDatabaseName());
-			DBCollection employeesCollection = personDb.getCollection(config.getMongoDB()
-					.getEmployeeCollectionName());
+			MongoDBConfig mongoDBConfig = config.getMongoDB();
+			MongoClient mongoClient = new MongoClient(mongoDBConfig.getHost(), mongoDBConfig.getPort());
+			DB personDb = mongoClient.getDB(mongoDBConfig.getDatabaseName());
+			DBCollection employeesCollection = personDb.getCollection(mongoDBConfig.getEmployeeCollectionName());
 			return employeesCollection;
 		} catch (UnknownHostException e) {
 			throw new RepositoryException("Couldn't create MongoDB Client.", e);
