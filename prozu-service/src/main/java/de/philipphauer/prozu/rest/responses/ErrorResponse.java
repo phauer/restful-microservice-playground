@@ -2,8 +2,6 @@ package de.philipphauer.prozu.rest.responses;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import de.philipphauer.prozu.rest.URLConstants;
-
 @XmlRootElement
 public class ErrorResponse {
 
@@ -24,6 +22,6 @@ public class ErrorResponse {
 	}
 
 	public String getDetailsURL() {
-		return URLConstants.REST_SERVICE + "doc/" + id;
+		return "/doc/" + id;
 	}
 }

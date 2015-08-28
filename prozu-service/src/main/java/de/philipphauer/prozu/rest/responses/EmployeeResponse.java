@@ -1,5 +1,6 @@
 package de.philipphauer.prozu.rest.responses;
 
+import java.net.URI;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -16,12 +17,15 @@ public class EmployeeResponse {
 
 	private String name;
 
+	private URI baseUri;
+
 	public EmployeeResponse() {
 	}
 
-	public EmployeeResponse(String id, String name) {
+	public EmployeeResponse(String id, String name, URI baseUri) {
 		this.id = id;
 		this.name = name;
+		this.baseUri = baseUri;
 	}
 
 	public String getId() {
@@ -38,10 +42,10 @@ public class EmployeeResponse {
 	 */
 	@XmlElement(name = "links")
 	public List<LinkResponse> getLinks() {
-		List<LinkResponse> links = Lists.newArrayList(
-				new LinkResponse("details", URLConstants.EMPLOYEES_FULL + "/" + id),
-				new LinkResponse("projectdays", URLConstants.EMPLOYEES_FULL + "/" + id + "/projectdays")
-				);
+		URI detailsUrl = baseUri.resolve(URLConstants.EMPLOYEES_RELATIVE_URL + "/" + id);
+		URI projectDaysUrl = baseUri.resolve(URLConstants.EMPLOYEES_RELATIVE_URL + "/" + id + "/projectdays");
+		List<LinkResponse> links = Lists.newArrayList(new LinkResponse("details", detailsUrl), new LinkResponse(
+				"projectdays", projectDaysUrl));
 		return links;
 	}
 

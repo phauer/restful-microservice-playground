@@ -1,5 +1,6 @@
 package de.philipphauer.prozu.rest.responses;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,14 +25,16 @@ public class EmployeesResponse {
 	private int limit;
 	private int offset;
 	private Optional<String> search;
+	private URI baseUri;
 
 	public EmployeesResponse(int limit, int offset, long totalEmployeeCount, List<EmployeeResponse> employees,
-			Optional<String> search) {
+			Optional<String> search, URI baseUri) {
 		this.limit = limit;
 		this.offset = offset;
 		this.totalCount = totalEmployeeCount;
 		this.employees = employees;
 		this.search = search;
+		this.baseUri = baseUri;
 	}
 
 	public int getLimit() {
@@ -57,25 +60,25 @@ public class EmployeesResponse {
 	@XmlElement(name = "links")
 	public List<LinkResponse> getLinks() {
 		int nextOffset = offset + limit;
-		String nextUrl = createUrl(limit, nextOffset, search);
+		URI nextUrl = createUrl(limit, nextOffset, search);
 		LinkResponse nextPage = new LinkResponse("nextPage", nextUrl);
 
 		List<LinkResponse> links = Lists.newArrayList(nextPage);
 
 		int previousOffset = offset - limit;
 		if (previousOffset >= 0) {
-			String previousUrl = createUrl(limit, previousOffset, search);
+			URI previousUrl = createUrl(limit, previousOffset, search);
 			LinkResponse previousPage = new LinkResponse("previousPage", previousUrl);
 			links.add(previousPage);
 		}
 		return links;
 	}
 
-	private String createUrl(int limit, int offset, Optional<String> search) {
-		String nextUrl = URLConstants.EMPLOYEES_FULL + "?limit=" + limit + "&offset=" + offset;
+	private URI createUrl(int limit, int offset, Optional<String> search) {
+		String nextUrl = URLConstants.EMPLOYEES_RELATIVE_URL + "?limit=" + limit + "&offset=" + offset;
 		if (search.isPresent()) {
 			nextUrl += "&search=" + search.get();
 		}
-		return nextUrl;
+		return baseUri.resolve(nextUrl);
 	}
 }

@@ -1,5 +1,7 @@
 package de.philipphauer.prozu.rest.responses;
 
+import java.net.URI;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -13,9 +15,9 @@ public class LinkResponse {
 	 * "rel": "something-else-related", "href": "/another/arbitrary/link" }
 	 */
 	private String relation;
-	private String reference;
+	private URI reference;
 
-	public LinkResponse(String relation, String reference) {
+	public LinkResponse(String relation, URI reference) {
 		this.relation = relation;
 		this.reference = reference;
 	}
@@ -30,7 +32,7 @@ public class LinkResponse {
 
 	@XmlElement(name = "href")
 	@JsonProperty(value = "href")
-	public String getReference() {
+	public URI getReference() {
 		return reference;
 	}
 

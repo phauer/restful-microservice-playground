@@ -2,9 +2,8 @@ package de.philipphauer.prozu.rest;
 
 public class URLConstants {
 
-	public static final String REST_SERVICE = "http://localhost:8080/";
-
 	public static final String EMPLOYEES = "employees";
 
-	public static final String EMPLOYEES_FULL = REST_SERVICE + EMPLOYEES;
+	/** without host and port */
+	public static final String EMPLOYEES_RELATIVE_URL = "/" + EMPLOYEES;
 }
