@@ -1,22 +1,12 @@
-#docker run --name prozu-mongodb -d -P phauer/mongodb
-#docker run --name prozu-mongodb -d phauer/mongodb
-# name ist wichtig für späteren link
-# -d -> run container in background
-# -P -> map any required network port inside our container to our host (achtung: wird zufälliger port auf host system) -> explizit mit -p 123:123 setzen
-
-# let's start without links and let the contains communicate via ports
 #docker run -d -p 27017:27017 phauer/mongodb
 #docker ps 
 #docker kill <containerid>
 
-# If using boot2docker
-# Usage: mongo --port <port you get from `docker ps`>  --host <ip address from `boot2docker ip`>
-# richtigen port nehmen, achte auch port forwarding "0.0.0:32770->27017/tcp" -> use 32770
-# wie boot2docker ip rausbekommen? a) steht beim starten der docker shell b) >docker-machine ip <machine name> (machine name ist "default" - einfach die VirtualBox GUI starten)
-
 # test from host system:
 # mongo --port 27017 --host 192.168.99.100
-# or test with browser http://192.168.99.100:27017/ -> getting error message, but "ok its up and running".
+# or test with browser http://192.168.99.100:27017/ 
+# getting port: 'run docker ps'
+# getting host if using boot2docker: 'docker-machine ip <machine name>' (machine name's default is "default"). However, the host and machine name also is printed at the startup of the docker deamon
 
 # https://hub.docker.com/_/mongo/
 # https://docs.docker.com/examples/mongodb/
