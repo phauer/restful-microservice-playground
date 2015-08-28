@@ -1,4 +1,3 @@
-template: Hello, %s!
 mongoDB:
  host: localhost
  port: 27017

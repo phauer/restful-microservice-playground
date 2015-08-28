@@ -10,8 +10,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hubspot.dropwizard.guice.GuiceBundle;
 
 import de.philipphauer.prozu.configuration.ProZuConfiguration;
-import de.philipphauer.prozu.healthchecks.TemplateHealthCheck;
-import de.philipphauer.prozu.rest.EmployeeResource;
 
 public class ProZuApplication extends Application<ProZuConfiguration> {
 
@@ -35,7 +33,6 @@ public class ProZuApplication extends Application<ProZuConfiguration> {
 		guiceBundle = GuiceBundle.<ProZuConfiguration> newBuilder()
 				.addModule(module)
 				.setConfigClass(ProZuConfiguration.class)
-				// .enableAutoConfig("de.itemis.prozu.repo.inmemory")
 				.enableAutoConfig(getClass().getPackage().getName())
 				.build();
 		bootstrap.addBundle(guiceBundle);
@@ -50,9 +47,7 @@ public class ProZuApplication extends Application<ProZuConfiguration> {
 
 	@Override
 	public void run(ProZuConfiguration configuration, Environment environment) {
-		TemplateHealthCheck healthCheck = new TemplateHealthCheck(configuration.getTemplate());
-		environment.healthChecks().register("template", healthCheck);
-		environment.jersey().register(EmployeeResource.class);
+		// resources, healthchecks etc are automatically configured via guice bundle (enableAutoConfig())
 	}
 
 }
