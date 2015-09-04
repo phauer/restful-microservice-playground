@@ -227,7 +227,7 @@
 									<port>8081</port>
 								</ports>
 								<cmd>
-									<shell>java -jar /maven/prozu-service-${project.version}.jar server /maven/docker-config.yml</shell>
+									<shell>java -DdbHost=$DB_PORT_27017_TCP_ADDR -DdbPort=$DB_PORT_27017_TCP_PORT -jar /maven/prozu-service-${project.version}.jar server /maven/docker-config.yml</shell>
 								</cmd>
 							</build>
 							<run>
@@ -252,9 +252,10 @@
 							<alias>mongodb</alias>
 							<name>mongo:2.6.11</name>
 							<run>
-								<ports>
+								<!-- don't expose mongodb's port on the host. the host address and port are exchanged via docker links between the containers. -->
+								<!-- ports>
 									<port>${mongodb.port}:27017</port>
-								</ports>
+								</ports -->
 								<wait>
 									<log>waiting for connections on port</log>
 									<time>10000</time>

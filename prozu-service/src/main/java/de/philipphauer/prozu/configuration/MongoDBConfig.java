@@ -12,9 +12,9 @@ public class MongoDBConfig {
 	@NotEmpty
 	private String employeeCollectionName;
 
-	private int port = 27017;
+	private int port = Integer.parseInt(System.getProperty("dbPort", "27017"));
 
-	private String host = "localhost";
+	private String host = System.getProperty("dbHost", "localhost");
 
 	@JsonProperty
 	public String getDatabaseName() {

@@ -1,6 +1,5 @@
 mongoDB:
- host: 192.168.99.100
- port: 27017
+#host and port is set via vm arg/env var (docker links)
  databaseName: test
  employeeCollectionName: employees
 # the only required property is resourcePackage, for more config options see below
