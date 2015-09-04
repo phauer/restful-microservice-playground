@@ -3,6 +3,8 @@ package de.philipphauer.prozu;
 import java.net.UnknownHostException;
 
 import org.mongojack.internal.MongoJackModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.AbstractModule;
@@ -23,6 +25,8 @@ import de.philipphauer.prozu.util.ser.Java8TimeModule;
 public class ProZuModule extends AbstractModule {
 
 	private ObjectMapper objectMapper;
+
+	private static Logger logger = LoggerFactory.getLogger(ProZuModule.class);
 
 	public ProZuModule(ObjectMapper objectMapper) {
 		this.objectMapper = objectMapper;
@@ -49,6 +53,7 @@ public class ProZuModule extends AbstractModule {
 		try {
 			MongoClientOptions options = new MongoClientOptions.Builder().connectTimeout(1000 * 1).build();
 			MongoDBConfig mongoDBConfig = config.getMongoDB();
+			logger.info("Using mongodb configuration: {}", mongoDBConfig.toString());
 			ServerAddress serverAddress = new ServerAddress(mongoDBConfig.getHost(), mongoDBConfig.getPort());
 			MongoClient mongoClient = new MongoClient(serverAddress, options);
 			DB personDb = mongoClient.getDB(mongoDBConfig.getDatabaseName());
