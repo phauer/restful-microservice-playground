@@ -25,6 +25,7 @@ import de.philipphauer.prozu.di.service.ServiceTestRunner;
 import de.philipphauer.prozu.rest.util.MediaTypeWithCharset;
 
 @RunWith(ServiceTestRunner.class)
+@Ignore("mongodb needed. migrate to integration test. docker will start mongodb automatically.")
 public class EmployeeResourceTest extends AbstractEmployeeResourceTest {
 
 	// TODO use rest-assured instead

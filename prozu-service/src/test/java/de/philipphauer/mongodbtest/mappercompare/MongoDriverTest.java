@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.mongodb.BasicDBObject;
@@ -12,6 +13,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 
+@Ignore("mongodb has to run.")
 public class MongoDriverTest {
 
 	// http://mongodb.github.io/mongo-java-driver/3.0/driver/getting-started/quick-tour/

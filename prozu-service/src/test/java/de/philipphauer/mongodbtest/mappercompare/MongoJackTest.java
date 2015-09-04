@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mongojack.DBCursor;
 import org.mongojack.DBQuery;
@@ -13,6 +14,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
 
+@Ignore("mongodb has to run.")
 public class MongoJackTest {
 
 	/*

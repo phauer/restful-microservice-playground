@@ -5,12 +5,14 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 
 import com.mongodb.MongoClient;
 
+@Ignore("mongodb has to run.")
 public class MorphiaTest {
 
 	// https://github.com/mongodb/morphia/wiki/QuickStart

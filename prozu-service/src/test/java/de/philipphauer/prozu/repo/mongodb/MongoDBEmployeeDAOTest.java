@@ -14,6 +14,7 @@ import jersey.repackaged.com.google.common.collect.Lists;
 import org.hamcrest.core.Is;
 import org.hamcrest.core.IsNull;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,6 +23,7 @@ import de.philipphauer.prozu.model.Employee;
 import de.philipphauer.prozu.model.ProjectDays;
 
 @RunWith(GuiceRunner.class)
+@Ignore("mongodb needed. migrate to integration test. docker will start mongodb automatically.")
 public class MongoDBEmployeeDAOTest {
 
 	@Inject

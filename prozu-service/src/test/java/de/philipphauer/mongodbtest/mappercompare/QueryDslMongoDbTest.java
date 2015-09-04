@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -12,6 +13,7 @@ import org.mongodb.morphia.Morphia;
 import com.mongodb.MongoClient;
 import com.mysema.query.mongodb.morphia.MorphiaQuery;
 
+@Ignore("mongodb has to run.")
 public class QueryDslMongoDbTest {
 
 	// https://github.com/querydsl/querydsl/tree/master/querydsl-mongodb
