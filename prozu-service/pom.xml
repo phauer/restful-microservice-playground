@@ -240,7 +240,7 @@
 									<time>10000</time>
 								</wait>
 								<links>
-									<link>mongodb</link>
+									<link>mongodb:db</link>
 								</links>
 								<log>
 									<prefix>ProZu</prefix>
