@@ -6,3 +6,19 @@ mongoDB:
 # the only required property is resourcePackage, for more config options see below
 swagger:
   resourcePackage: de.philipphauer.prozu.rest
+logging:
+  level: INFO
+  appenders:
+    - type: console
+      threshold: ALL
+      timeZone: UTC
+      target: stdout
+      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %X{code} %msg %n"
+    - type: file
+      currentLogFilename: prozu.log
+      threshold: ALL
+      archive: true
+      archivedLogFilenamePattern: prozu-%d.log
+      archivedFileCount: 5
+      timeZone: UTC
+      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %X{code} %msg %n"
