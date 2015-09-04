@@ -10,6 +10,10 @@
 		<querydsl.version>3.6.3</querydsl.version>
 		<mongodb.driver.version>2.13.1</mongodb.driver.version>
 		<swagger-maven-plugin-version>3.0.1</swagger-maven-plugin-version>
+		<docker.host.address>192.168.99.100</docker.host.address>
+		<docker.port>8080</docker.port>
+		<docker.port.admin>8081</docker.port.admin>
+		<mongodb.port>27017</mongodb.port>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -227,16 +231,37 @@
 							</build>
 							<run>
 								<ports>
-									<port>8080:8080</port>
-									<port>8081:8081</port>
+									<port>${docker.port}:8080</port>
+									<port>${docker.port.admin}:8081</port>
 								</ports>
 								<wait>
-									<url>http://192.168.99.100:8081/ping</url>
+									<url>http://${docker.host.address}:${docker.port.admin}/ping</url>
 									<time>10000</time>
 								</wait>
-								<!-- links>
-									<link>database:db</link>
-								</links -->
+								<links>
+									<link>mongodb</link>
+								</links>
+								<log>
+									<prefix>ProZu</prefix>
+									<color>cyan</color>
+								</log>
+							</run>
+						</image>
+						<image>
+							<alias>mongodb</alias>
+							<name>mongo:2.6.11</name>
+							<run>
+								<ports>
+									<port>${mongodb.port}:27017</port>
+								</ports>
+								<wait>
+									<log>waiting for connections on port</log>
+									<time>10000</time>
+								</wait>
+								<log>
+									<prefix>MongoDB</prefix>
+									<color>yellow</color>
+								</log>
 							</run>
 						</image>
 					</images>
