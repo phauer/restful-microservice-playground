@@ -126,10 +126,8 @@
 						</goals>
 						<configuration>
 							<transformers>
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-								<transformer
-									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>de.philipphauer.prozu.ProZuApplication</mainClass>
 								</transformer>
 							</transformers>
@@ -200,6 +198,70 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.jolokia</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>0.13.3</version>
+
+				<configuration>
+					<verbose>true</verbose>
+					<images>
+						<image>
+							<alias>prozu-service</alias>
+							<name>phauer/prozu-service:${project.version}</name>
+
+							<build>
+								<from>java:8-jre</from>
+								<maintainer>phauer</maintainer>
+								<assembly>
+									<descriptor>docker-assembly.xml</descriptor>
+								</assembly>
+								<ports>
+									<port>8080</port>
+									<port>8081</port>
+								</ports>
+								<cmd>
+									<shell>java -jar /maven/prozu-service-${project.version}.jar server /maven/docker-config.yml</shell>
+								</cmd>
+							</build>
+							<run>
+								<ports>
+									<port>8080:8080</port>
+									<port>8081:8081</port>
+								</ports>
+								<wait>
+									<url>http://192.168.99.100:8081/ping</url>
+									<time>10000</time>
+								</wait>
+								<!-- links>
+									<link>database:db</link>
+								</links -->
+							</run>
+						</image>
+					</images>
+				</configuration>
+
+  <!-- Connect start/stop to pre- and
+       post-integration-test phase, respectively if you want to start
+       your docker containers during integration tests 
+				<executions>
+					<execution>
+						<id>start</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>start</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>stop</id>
+						<phase>post-integration-test</phase>
+						<goals>
+							<goal>stop</goal>
+						</goals>
+					</execution>
+				</executions>-->
 			</plugin>
 		</plugins>
 		<pluginManagement>
