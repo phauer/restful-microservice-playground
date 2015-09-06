@@ -12,7 +12,7 @@
 		<querydsl.version>3.6.3</querydsl.version>
 		<mongodb.driver.version>2.13.1</mongodb.driver.version>
 		<swagger-maven-plugin-version>3.0.1</swagger-maven-plugin-version>
-		<docker.host.address>192.168.99.100</docker.host.address>
+		<docker.host.address>localhost</docker.host.address><!-- 192.168.99.100 for windows -->
 		<docker.port>8080</docker.port>
 		<docker.port.admin>8081</docker.port.admin>
 		<mongodb.port>27017</mongodb.port>
@@ -252,6 +252,7 @@
 							<alias>mongodb</alias>
 							<name>mongo:2.6.11</name>
 							<run>
+								<cmd>--smallfiles</cmd><!-- this is necessary on my native docker installation on ubuntu. "ERROR: Insufficient free space for journal files"  -->
 								<!-- don't expose mongodb's port on the host. the host address and port are exchanged via docker links between the containers. -->
 								<!-- ports>
 									<port>${mongodb.port}:27017</port>
