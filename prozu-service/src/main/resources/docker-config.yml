@@ -1,5 +1,5 @@
 mongoDB:
-#host and port is set via vm arg/env var (docker links)
+#host and port are set via vm arg/env var (docker links)
  databaseName: test
  employeeCollectionName: employees
 # the only required property is resourcePackage, for more config options see below
