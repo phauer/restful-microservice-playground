@@ -235,6 +235,7 @@
 				<version>0.13.3</version>
 
 				<configuration>
+					<dockerHost>tcp://${docker.host.address}:4243</dockerHost>
 					<images>
 						<image>
 							<alias>prozu-service</alias>
