@@ -2,7 +2,7 @@
 #docker ps 
 #docker kill <containerid>
 
-# test from host system:
+# test from host system (host need if using boot2docker):
 # mongo --port 27017 --host 192.168.99.100
 # or test with browser http://192.168.99.100:27017/ 
 # getting port: 'run docker ps'

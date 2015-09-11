@@ -1,3 +1,5 @@
+rem local mongodb installation needed
+
 echo "Creating dbpath"
 mkdir \data\db\
 
