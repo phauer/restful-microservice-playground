@@ -12,11 +12,34 @@
 		<querydsl.version>3.6.3</querydsl.version>
 		<mongodb.driver.version>2.13.1</mongodb.driver.version>
 		<swagger-maven-plugin-version>3.0.1</swagger-maven-plugin-version>
-		<docker.host.address>localhost</docker.host.address><!-- 192.168.99.100 for windows -->
 		<docker.port>8080</docker.port>
 		<docker.port.admin>8081</docker.port.admin>
 		<mongodb.port>27017</mongodb.port>
 	</properties>
+	<profiles>
+		<profile>
+			<id>docker-host-on-windows</id>
+			<activation>
+				<os>
+					<family>Windows</family>
+				</os>
+			</activation>
+			<properties>
+				<docker.host.address>192.168.99.100</docker.host.address>
+			</properties>
+		</profile>
+		<profile>
+			<id>docker-host-on-linux</id>
+			<activation>
+				<os>
+					<family>Linux</family>
+				</os>
+			</activation>
+			<properties>
+				<docker.host.address>localhost</docker.host.address>
+			</properties>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>io.dropwizard</groupId>
@@ -78,7 +101,8 @@
 			<artifactId>morphia</artifactId>
 			<version>0.111</version>
 		</dependency>
-		<!-- revolve conflict between jackson 2.5.1 (used by dropwizard) and 2.4.4 (used by mongodb) -->
+		<!-- revolve conflict between jackson 2.5.1 (used by dropwizard) and 2.4.4 
+			(used by mongodb) -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -90,20 +114,18 @@
 			<artifactId>javax.json</artifactId>
 			<version>1.0.4</version>
 		</dependency>
-		<!--  generating swagger specification from jax-rs annotations. access via http://localhost:<your_port>/swagger -->
+		<!-- generating swagger specification from jax-rs annotations. access via 
+			http://localhost:<your_port>/swagger -->
 		<dependency>
 			<groupId>io.federecio</groupId>
 			<artifactId>dropwizard-swagger</artifactId>
 			<version>0.7.0</version>
 		</dependency>
-		<!-- testing the swagger generated client library (generated from swagger.json; which in turn is generated from this JAX-RS resource classes) 
-		causing version conflict because generated lib uses very old jersey version :-( -->
-		<!-- dependency>
-			<groupId>de.philipphauer</groupId>
-			<artifactId>prozu-service-client-library</artifactId>
-			<version>0.0.1</version>
-			<scope>test</scope>
-		</dependency -->
+		<!-- testing the swagger generated client library (generated from swagger.json; 
+			which in turn is generated from this JAX-RS resource classes) causing version 
+			conflict because generated lib uses very old jersey version :-( -->
+		<!-- dependency> <groupId>de.philipphauer</groupId> <artifactId>prozu-service-client-library</artifactId> 
+			<version>0.0.1</version> <scope>test</scope> </dependency -->
 	</dependencies>
 	<build>
 		<plugins>
@@ -132,8 +154,10 @@
 						</goals>
 						<configuration>
 							<transformers>
-								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
-								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
+								<transformer
+									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>de.philipphauer.prozu.ProZuApplication</mainClass>
 								</transformer>
 							</transformers>
@@ -227,7 +251,10 @@
 									<port>8081</port>
 								</ports>
 								<cmd>
-									<shell>java -DdbHost=$DB_PORT_27017_TCP_ADDR -DdbPort=$DB_PORT_27017_TCP_PORT -jar /maven/prozu-service-${project.version}.jar server /maven/docker-config.yml</shell>
+									<shell>java -DdbHost=$DB_PORT_27017_TCP_ADDR
+										-DdbPort=$DB_PORT_27017_TCP_PORT -jar
+										/maven/prozu-service-${project.version}.jar server
+										/maven/docker-config.yml</shell>
 								</cmd>
 							</build>
 							<run>
@@ -252,11 +279,11 @@
 							<alias>mongodb</alias>
 							<name>mongo:2.6.11</name>
 							<run>
-								<cmd>--smallfiles</cmd><!-- this is necessary on my native docker installation on ubuntu. "ERROR: Insufficient free space for journal files"  -->
-								<!-- don't expose mongodb's port on the host. the host address and port are exchanged via docker links between the containers. -->
-								<!-- ports>
-									<port>${mongodb.port}:27017</port>
-								</ports -->
+								<cmd>--smallfiles</cmd><!-- this is necessary on my native docker 
+									installation on ubuntu. "ERROR: Insufficient free space for journal files" -->
+								<!-- don't expose mongodb's port on the host. the host address and 
+									port are exchanged via docker links between the containers. -->
+								<!-- ports> <port>${mongodb.port}:27017</port> </ports -->
 								<wait>
 									<log>waiting for connections on port</log>
 									<time>10000</time>
@@ -321,7 +348,8 @@
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
