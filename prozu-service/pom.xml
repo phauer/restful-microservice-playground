@@ -12,8 +12,8 @@
 		<querydsl.version>3.6.3</querydsl.version>
 		<mongodb.driver.version>2.13.1</mongodb.driver.version>
 		<swagger-maven-plugin-version>3.0.1</swagger-maven-plugin-version>
-		<docker.port>8080</docker.port>
-		<docker.port.admin>8081</docker.port.admin>
+		<prozu.port>8080</prozu.port>
+		<prozu.port.admin>8081</prozu.port.admin>
 		<mongodb.port>27017</mongodb.port>
 	</properties>
 	<profiles>
@@ -25,7 +25,7 @@
 				</os>
 			</activation>
 			<properties>
-				<docker.host.address>192.168.99.100</docker.host.address>
+				<docker.host.address>192.168.99.100</docker.host.address><!-- keep in sync with DOCKER_HOST -->
 			</properties>
 		</profile>
 		<profile>
@@ -235,7 +235,7 @@
 				<version>0.13.3</version>
 
 				<configuration>
-					<dockerHost>tcp://${docker.host.address}:4243</dockerHost>
+					<!-- don't specify dockerHost because this can be os specific (linux vs windows). use DOCKER_HOST instead. -->
 					<images>
 						<image>
 							<alias>prozu-service</alias>
@@ -252,16 +252,16 @@
 									<port>8081</port>
 								</ports>
 								<cmd>
-									<shell>java -DdbHost=$DB_PORT_27017_TCP_ADDR
-										-DdbPort=$DB_PORT_27017_TCP_PORT -jar
-										/maven/prozu-service-${project.version}.jar server
+									<shell>java -DdbHost=$DB_PORT_27017_TCP_ADDR \
+										-DdbPort=$DB_PORT_27017_TCP_PORT -jar \
+										/maven/prozu-service-${project.version}.jar server \
 										/maven/docker-config.yml</shell>
 								</cmd>
 							</build>
 							<run>
 								<ports>
-									<port>${docker.port}:8080</port>
-									<port>${docker.port.admin}:8081</port>
+									<port>${prozu.port}:8080</port>
+									<port>${prozu.port.admin}:8081</port>
 								</ports>
 								<volumes>
 									<bind>
@@ -269,7 +269,7 @@
 									</bind>
 								</volumes>
 								<wait>
-									<url>http://${docker.host.address}:${docker.port.admin}/ping</url>
+									<url>http://${docker.host.address}:${prozu.port.admin}/ping</url>
 									<time>10000</time>
 								</wait>
 								<links>
@@ -331,7 +331,7 @@
 					</includes>
 					<groups>de.philipphauer.prozu.di.IntegrationTest</groups>
 					<systemPropertyVariables>
-						<service.url>http://${docker.host.address}:${docker.port}/</service.url>
+						<service.url>http://${docker.host.address}:${prozu.port}/</service.url>
 					</systemPropertyVariables>
 				</configuration>
 				<executions>
