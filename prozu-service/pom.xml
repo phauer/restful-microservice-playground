@@ -235,7 +235,7 @@
 				<version>0.13.3</version>
 
 				<configuration>
-					<!-- don't specify dockerHost because this can be os specific (linux vs windows). use DOCKER_HOST instead. -->
+					<!-- don't specify dockerHost because this can be OS specific (linux vs windows/boot2docker). use DOCKER_HOST instead. -->
 					<images>
 						<image>
 							<alias>prozu-service</alias>
