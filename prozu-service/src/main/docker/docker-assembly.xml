@@ -3,7 +3,7 @@
 	<id>porzu-service</id>
 	<files>
 		<file>
-			<source>target/prozu-service-${project.version}.jar</source>
+			<source>target/${project.build.finalName}.jar</source>
 			<outputDirectory>/</outputDirectory>
 		</file>
 		<file>

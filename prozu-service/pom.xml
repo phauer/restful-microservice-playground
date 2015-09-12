@@ -254,7 +254,7 @@
 								<cmd>
 									<shell>java -DdbHost=$DB_PORT_27017_TCP_ADDR \
 										-DdbPort=$DB_PORT_27017_TCP_PORT -jar \
-										/maven/prozu-service-${project.version}.jar server \
+										/maven/${project.build.finalName}.jar server \
 										/maven/docker-config.yml</shell>
 								</cmd>
 							</build>
