@@ -21,3 +21,7 @@ In order to stop both containers use
 ````bash
 mvn docker:stop
 ````
+Finally, to run the whole build (including tests) and to push the created container to docker hub, use 
+````
+mvn -Ddocker.username=<dockerHubUser> -Ddocker.password=<dockerHubPassword> deploy
+````

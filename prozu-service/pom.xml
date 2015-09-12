@@ -15,6 +15,7 @@
 		<prozu.port>8080</prozu.port>
 		<prozu.port.admin>8081</prozu.port.admin>
 		<mongodb.port>27017</mongodb.port>
+		<docker.username>phauer</docker.username>
 	</properties>
 	<profiles>
 		<profile>
@@ -25,7 +26,8 @@
 				</os>
 			</activation>
 			<properties>
-				<docker.host.address>192.168.99.100</docker.host.address><!-- keep in sync with DOCKER_HOST -->
+				<docker.host.address>192.168.99.100</docker.host.address><!-- keep in 
+					sync with DOCKER_HOST -->
 			</properties>
 		</profile>
 		<profile>
@@ -235,12 +237,12 @@
 				<version>0.13.3</version>
 
 				<configuration>
-					<!-- don't specify dockerHost because this can be OS specific (linux vs windows/boot2docker). use DOCKER_HOST instead. -->
+					<!-- don't specify dockerHost because this can be OS specific (linux 
+						vs windows/boot2docker). use DOCKER_HOST instead. -->
 					<images>
 						<image>
 							<alias>prozu-service</alias>
-							<name>phauer/prozu-service:${project.version}</name>
-
+							<name>${docker.username}/prozu-service:${project.version}</name>
 							<build>
 								<from>java:8-jre</from>
 								<maintainer>phauer</maintainer>
@@ -318,6 +320,13 @@
 							<goal>stop</goal>
 						</goals>
 					</execution>
+					<execution>
+						<id>push-to-docker-hub</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>push</goal>
+						</goals>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -349,6 +358,14 @@
 				<version>2.18.1</version>
 				<configuration>
 					<excludedGroups>de.philipphauer.prozu.di.IntegrationTest</excludedGroups>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.7</version>
+				<configuration>
+					<skip>true</skip><!-- we push the container instead -->
 				</configuration>
 			</plugin>
 		</plugins>
