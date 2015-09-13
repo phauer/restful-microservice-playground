@@ -241,11 +241,11 @@
 						vs windows/boot2docker). use DOCKER_HOST instead. -->
 					<images>
 						<image>
-							<alias>prozu-service</alias>
+							<alias>${project.artifactId}</alias>
 							<name>${docker.username}/prozu-service:${project.version}</name>
 							<build>
 								<from>java:8-jre</from>
-								<maintainer>phauer</maintainer>
+								<maintainer>${docker.username}</maintainer>
 								<assembly>
 									<descriptor>docker-assembly.xml</descriptor>
 								</assembly>
