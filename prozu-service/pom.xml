@@ -278,7 +278,7 @@
 									<link>mongodb:db</link>
 								</links>
 								<log>
-									<prefix>ProZu</prefix>
+									<prefix>${project.artifactId}</prefix>
 									<color>cyan</color>
 								</log>
 							</run>
