@@ -6,7 +6,7 @@ JENKINS_HOME=~/jenkins_home
 JenkinsContainerId=`docker ps -qa --filter "name=$JENKINS_CONTAINER_NAME"`
 if [ -n "$JenkinsContainerId" ]
 then
-	echo "Killing and removing existing jenkins container"
+	echo "Stopping and removing existing jenkins container"
 	docker stop $JENKINS_CONTAINER_NAME
 	docker rm $JENKINS_CONTAINER_NAME
 fi
