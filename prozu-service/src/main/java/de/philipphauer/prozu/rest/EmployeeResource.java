@@ -50,6 +50,8 @@ public class EmployeeResource {
 	private EmployeeDAO dao;
 	@Inject
 	private EntityMapper mapper;
+	@Inject
+	private DummyDataInitializer dummyInitializer;
 
 	// TODO better http status code on failures, illegal inputs, exceptions
 
@@ -65,6 +67,7 @@ public class EmployeeResource {
 			@ApiParam(value = "limits the result set", required = false, defaultValue = "10") @QueryParam("limit") Integer limit,
 			@ApiParam(value = "the offset", required = false, defaultValue = "0") @QueryParam("offset") Integer offset,
 			@ApiParam(value = "search for names that contains the given string. not case sensetive. ", required = false) @QueryParam("search") String search) {
+		initDummyDataIfDatabaseEmpty();
 		int usedLimit = limit == null ? 10 : limit;
 		int usedOffset = offset == null ? 0 : offset;
 		Optional<String> usedSearch = Optional.ofNullable(search);
@@ -73,6 +76,13 @@ public class EmployeeResource {
 		EmployeesResponse response = mapper.mapToEmployeesResponse(employees, usedLimit, usedOffset, totalCount,
 				usedSearch);
 		return response;
+	}
+
+	private void initDummyDataIfDatabaseEmpty() {
+		long employeeCount = dao.getEmployeeCount(Optional.empty());
+		if (employeeCount == 0){
+			dummyInitializer.initDummyData();
+		}
 	}
 
 	@ApiOperation(value = "Get an employees wit a certain ID", response = EmployeeResponse.class)
@@ -158,16 +168,4 @@ public class EmployeeResource {
 		return Response.ok().build();
 	}
 
-	@Inject
-	private DummyDataInitializer dummyInitializer;
-
-	/*
-	 * Just for simplified testing. I know this is not restful.
-	 */
-	@GET
-	@Path("/createDummy")
-	public Response createDummyEmployees() {
-		dummyInitializer.initDummyData();
-		return Response.ok().build();
-	}
 }
