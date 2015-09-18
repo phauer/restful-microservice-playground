@@ -261,6 +261,7 @@
 								</cmd>
 							</build>
 							<run>
+								<namingStrategy>alias</namingStrategy>
 								<ports>
 									<port>${prozu.port}:8080</port>
 									<port>${prozu.port.admin}:8081</port>
@@ -287,6 +288,7 @@
 							<alias>mongodb</alias>
 							<name>mongo:2.6.11</name>
 							<run>
+								<namingStrategy>alias</namingStrategy>
 								<cmd>--smallfiles</cmd><!-- this is necessary on my native docker 
 									installation on ubuntu. "ERROR: Insufficient free space for journal files" -->
 								<!-- don't expose mongodb's port on the host. the host address and 
