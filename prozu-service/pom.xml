@@ -242,7 +242,7 @@
 					<images>
 						<image>
 							<alias>${project.artifactId}</alias>
-							<name>${docker.username}/prozu-service:${project.version}</name>
+							<name>${docker.username}/${project.artifactId}:${project.version}</name>
 							<build>
 								<from>java:8-jre</from>
 								<maintainer>${docker.username}</maintainer>
