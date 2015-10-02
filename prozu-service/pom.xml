@@ -15,7 +15,8 @@
 		<prozu.port>8080</prozu.port>
 		<prozu.port.admin>8081</prozu.port.admin>
 		<mongodb.port>27017</mongodb.port>
-		<docker.username>phauer</docker.username>
+		<docker.registry.name></docker.registry.name><!-- leave empty for docker hub; use e.g. "localhost:5000/" for a local docker registry -->
+		<docker.repository.name>${docker.registry.name}phauer/${project.artifactId}</docker.repository.name>
 	</properties>
 	<profiles>
 		<profile>
@@ -242,10 +243,10 @@
 					<images>
 						<image>
 							<alias>${project.artifactId}</alias>
-							<name>${docker.username}/${project.artifactId}:${project.version}</name>
+							<name>${docker.repository.name}:${project.version}</name>
 							<build>
 								<from>java:8-jre</from>
-								<maintainer>${docker.username}</maintainer>
+								<maintainer>phauer</maintainer>
 								<assembly>
 									<descriptor>docker-assembly.xml</descriptor>
 								</assembly>
