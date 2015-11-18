@@ -5,11 +5,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import de.philipphauer.prozu.service.client.ApiClient;
-import de.philipphauer.prozu.service.client.ApiException;
-import de.philipphauer.prozu.service.client.api.EmployeesApi;
-import de.philipphauer.prozu.service.client.model.EmployeeData;
-import de.philipphauer.prozu.service.client.model.EmployeesResponse;
+import de.philipphauer.prozu.client.api.EmployeesApi;
+import de.philipphauer.prozu.client.invoker.ApiClient;
+import de.philipphauer.prozu.client.invoker.ApiException;
+import de.philipphauer.prozu.client.model.EmployeeData;
+import de.philipphauer.prozu.client.model.EmployeesResponse;
 
 /**
  * testing the swagger-generated client library.
