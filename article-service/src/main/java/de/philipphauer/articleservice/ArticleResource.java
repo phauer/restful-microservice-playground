@@ -24,8 +24,8 @@ public class ArticleResource {
 
     @GET
     @Timed
-    public List<Article> getArticles(@QueryParam("name") Optional<String> name) {
+    public List<ArticleResponse> getArticles(@QueryParam("name") Optional<String> name) {
         final String value = String.format(template, name.or(defaultName));
-        return Lists.newArrayList(new Article("Auto"), new Article("Lego"), new Article("Puppe"));
+        return Lists.newArrayList(new ArticleResponse("Auto"), new ArticleResponse("Lego"), new ArticleResponse("Puppe"));
     }
 }

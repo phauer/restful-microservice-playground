@@ -3,11 +3,11 @@ package de.philipphauer.articleservice;
 /**
  * Created by hauer on 27.11.2015.
  */
-public class Article {
+public class ArticleResponse {
 
     private String name;
 
-    public Article(String name){
+    public ArticleResponse(String name){
         this.name = name;
     }
 
