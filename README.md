@@ -8,6 +8,9 @@ My playground for trying out frameworks and technologies related to modern java-
 - Single Page Applications with AngularJS
 - Yeoman, Bower, Grunt
 
+- prozu-service: Dropwizard, Docker, built with Maven, MongoDB, MongoJack, Eclipse
+- article-service: Dropwizard, built with Gradle, Spring Data MongoDB, MongoDB-Integration into Build for Tests, AssertJ, IntelliJ IDEA
+
 # Running the Application
 You need to have Docker up and running to run the ProZu service. After checking out the projekt, move to the folder prozu-service and execute:
 ````bash
