@@ -1,0 +1,40 @@
+group 'de.philipphauer'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'gradle-one-jar'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+project.ext {
+    dropwizardVersion = '0.9.1'
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+    testCompile 'org.assertj:assertj-core:3.2.0'
+    compile "io.dropwizard:dropwizard-core:$dropwizardVersion"
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+
+// Configure the oneJar task
+task createFatJar(type: OneJar) {
+    mainClass = 'de.philipphauer.articleservice.ArticleServiceApplication'
+}
+
+artifacts {
+    createFatJar
+}
