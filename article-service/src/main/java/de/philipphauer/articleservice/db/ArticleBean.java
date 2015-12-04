@@ -21,6 +21,14 @@ public class ArticleBean {
         this.category = category;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
