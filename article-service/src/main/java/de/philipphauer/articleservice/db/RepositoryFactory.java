@@ -1,6 +1,7 @@
 package de.philipphauer.articleservice.db;
 
 import com.mongodb.MongoClient;
+import de.philipphauer.articleservice.db.custom.CustomArticleRepositoryImpl;
 import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
@@ -17,7 +18,7 @@ public class RepositoryFactory {
             MongoDbFactory mongoDbFactory = new SimpleMongoDbFactory(mongoClient, "test");
             MongoTemplate mongoOptions = new MongoTemplate(mongoDbFactory);
             RepositoryFactorySupport factory = new MongoRepositoryFactory(mongoOptions);
-            return factory.getRepository(ArticleRepository.class);
+            return factory.getRepository(ArticleRepository.class, new CustomArticleRepositoryImpl());
         } catch (UnknownHostException e) {
             throw new RuntimeException("Couldn't create ArticleRepository",e);
         }

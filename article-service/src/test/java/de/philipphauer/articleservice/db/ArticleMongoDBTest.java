@@ -38,4 +38,11 @@ public class ArticleMongoDBTest {
                 .contains(legoFeuerwehr, legoTodesstern)
                 .doesNotContain(playmobileFeuerwehr);
     }
+
+
+    @Test
+    public void customMethod() {
+        List<ArticleBean> freshArticles = repo.findAllLegoArticles();
+        assertThat(freshArticles).hasSize(0);
+    }
 }
