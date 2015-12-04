@@ -10,7 +10,7 @@ My playground for trying out frameworks and technologies related to modern java-
 
 # Services
 - prozu-service: Dropwizard, built with Maven, Docker, Docker-Integration into build, MongoDB, MongoJack, Eclipse
-- article-service: Dropwizard, built with Gradle, MongoDB-Integration into build, Spring Data MongoDB, AssertJ, IntelliJ IDEA
+- article-service: Dropwizard, built with Gradle, MongoDB-Integration into build, Spring Data MongoDB, Tests with AssertJ and RetroFit, IntelliJ IDEA
 
 # Running the Application
 You need to have Docker up and running to run the ProZu service. After checking out the projekt, move to the folder prozu-service and execute:
