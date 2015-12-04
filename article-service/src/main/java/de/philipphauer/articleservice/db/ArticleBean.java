@@ -1,6 +1,9 @@
 package de.philipphauer.articleservice.db;
 
+import com.google.common.base.MoreObjects;
 import org.springframework.data.annotation.Id;
+
+import java.util.Objects;
 
 public class ArticleBean {
 
@@ -20,27 +23,25 @@ public class ArticleBean {
 
     @Override
     public String toString() {
-        return String.format(getClass().getSimpleName()+"[id=%s, name='%s', category='%s']", id, name, category);
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("name", name)
+                .add("category", category)
+                .toString();
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ArticleBean that = (ArticleBean) o;
-
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        return !(category != null ? !category.equals(that.category) : that.category != null);
-
+        return Objects.equals(id, that.id) &&
+                Objects.equals(name, that.name) &&
+                Objects.equals(category, that.category);
     }
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (category != null ? category.hashCode() : 0);
-        return result;
+        return Objects.hash(id, name, category);
     }
 }

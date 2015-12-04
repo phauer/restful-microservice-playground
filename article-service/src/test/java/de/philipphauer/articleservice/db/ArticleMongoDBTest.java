@@ -1,9 +1,6 @@
-package de.philipphauer.articleservice;
+package de.philipphauer.articleservice.db;
 
 import com.google.common.collect.Lists;
-import de.philipphauer.articleservice.db.ArticleBean;
-import de.philipphauer.articleservice.db.ArticleRepository;
-import de.philipphauer.articleservice.db.RepositoryFactory;
 import org.junit.Before;
 import org.junit.Test;
 
