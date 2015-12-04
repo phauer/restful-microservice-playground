@@ -4,6 +4,8 @@ public class ArticleResponse {
 
     private String name;
 
+    public ArticleResponse(){ }
+
     public ArticleResponse(String name){
         this.name = name;
     }
