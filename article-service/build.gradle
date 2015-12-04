@@ -1,9 +1,11 @@
 group 'de.philipphauer'
 version '1.0-SNAPSHOT'
 
+apply plugin: 'idea'
 apply plugin: 'java'
 apply plugin: 'gradle-one-jar'
 apply plugin: 'application'
+apply plugin: 'mongo'
 
 sourceCompatibility = 1.8
 
@@ -18,7 +20,9 @@ project.ext {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
     testCompile 'org.assertj:assertj-core:3.2.0'
+    testCompile 'com.jayway.restassured:rest-assured:2.7.0'
     compile "io.dropwizard:dropwizard-core:$dropwizardVersion"
+    compile "io.dropwizard:dropwizard-testing:$dropwizardVersion"
     compile 'org.springframework.data:spring-data-mongodb:1.8.1.RELEASE'
 }
 
@@ -28,12 +32,29 @@ buildscript {
     }
     dependencies {
         classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+        classpath 'com.sourcemuse.gradle.plugin:gradle-mongo-plugin:0.8.0'
     }
 }
 
 // Configure the oneJar task
+mainClassName = 'de.philipphauer.articleservice.ArticleServiceApplication'
 task createFatJar(type: OneJar) {
     mainClass = 'de.philipphauer.articleservice.ArticleServiceApplication'
+}
+
+task integrationTest(type: Test) {
+    include '**/*Integration*.*'
+    outputs.upToDateWhen { false }
+    doFirst {
+        startMongoDb.execute()
+    }
+    doLast {
+        stopMongoDb.execute()
+    }
+}
+
+mongo {
+    //configuration goes here... see https://github.com/sourcemuse/GradleMongoPlugin
 }
 
 artifacts {
