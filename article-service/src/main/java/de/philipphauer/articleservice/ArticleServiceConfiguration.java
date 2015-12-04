@@ -4,9 +4,6 @@ import io.dropwizard.Configuration;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.NotEmpty;
 
-/**
- * Created by hauer on 27.11.2015.
- */
 public class ArticleServiceConfiguration extends Configuration {
     @NotEmpty
     private String template;
