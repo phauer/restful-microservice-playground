@@ -1,4 +1,4 @@
-package de.philipphauer.musicianservice.db;
+package de.philipphauer.musicianservice.springDataMongo;
 
 import com.google.common.base.MoreObjects;
 import org.springframework.data.annotation.Id;
