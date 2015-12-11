@@ -19,6 +19,10 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>18.0</version>
@@ -30,6 +34,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>com.github.joelittlejohn.embedmongo</groupId>
+                <artifactId>embedmongo-maven-plugin</artifactId>
+                <version>0.3.1</version>
+                <configuration>
+                    <version>3.2.0</version>
+                    <bindIp>127.0.0.1</bindIp>
+                    <wait>true</wait>
+                </configuration>
             </plugin>
         </plugins>
     </build>
